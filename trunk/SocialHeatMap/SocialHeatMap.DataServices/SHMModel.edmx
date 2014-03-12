@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SocialHeatMapModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="SocialHeatMapModelStoreContainer">
+          <EntitySet Name="TBL_COORDS" EntityType="SocialHeatMapModel.Store.TBL_COORDS" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TBL_SEARCH_HISTORY" EntityType="SocialHeatMapModel.Store.TBL_SEARCH_HISTORY" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TBL_USER" EntityType="SocialHeatMapModel.Store.TBL_USER" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_SearchHistory_User" Association="SocialHeatMapModel.Store.FK_SearchHistory_User">
+            <End Role="TBL_USER" EntitySet="TBL_USER" />
+            <End Role="TBL_SEARCH_HISTORY" EntitySet="TBL_SEARCH_HISTORY" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TBL_COORDS">
+          <Key>
+            <PropertyRef Name="COORD_ID" />
+          </Key>
+          <Property Name="COORD_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LATITUDE" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="LONGITUDE" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+        </EntityType>
+        <EntityType Name="TBL_SEARCH_HISTORY">
+          <Key>
+            <PropertyRef Name="SEARCH_ID" />
+          </Key>
+          <Property Name="SEARCH_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="SEACH_TEXT" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="RESULTS" Type="varchar(max)" Nullable="false" />
+          <Property Name="CREATED_DT" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TBL_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="LAST_NAME" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="SCREENNAME" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="IS_ADMIN" Type="bit" Nullable="false" />
+          <Property Name="CREATED_DT" Type="datetime" Nullable="false" />
+          <Property Name="ACCESS_TOKEN" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="ACCESS_TOKEN_SECRET" Type="varchar" Nullable="false" MaxLength="2000" />
+        </EntityType>
+        <Association Name="FK_SearchHistory_User">
+          <End Role="TBL_USER" Type="SocialHeatMapModel.Store.TBL_USER" Multiplicity="1" />
+          <End Role="TBL_SEARCH_HISTORY" Type="SocialHeatMapModel.Store.TBL_SEARCH_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TBL_SEARCH_HISTORY">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SocialHeatMapModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SocialHeatMapEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_USER" EntityType="SocialHeatMapModel.TBL_USER" />
+          <EntitySet Name="TBL_COORDS" EntityType="SocialHeatMapModel.TBL_COORDS" />
+          <EntitySet Name="TBL_SEARCH_HISTORY" EntityType="SocialHeatMapModel.TBL_SEARCH_HISTORY" />
+          <AssociationSet Name="FK_SearchHistory_User" Association="SocialHeatMapModel.FK_SearchHistory_User">
+            <End Role="TBL_USER" EntitySet="TBL_USER" />
+            <End Role="TBL_SEARCH_HISTORY" EntitySet="TBL_SEARCH_HISTORY" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TBL_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FIRST_NAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
+          <Property Name="LAST_NAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
+          <Property Name="SCREENNAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
+          <Property Name="IS_ADMIN" Type="Boolean" Nullable="false" />
+          <Property Name="CREATED_DT" Type="DateTime" Nullable="false" />
+          <Property Type="String" Name="ACCESS_TOKEN" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ACCESS_TOKEN_SECRET" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_SEARCH_HISTORY" Relationship="SocialHeatMapModel.FK_SearchHistory_User" FromRole="TBL_USER" ToRole="TBL_SEARCH_HISTORY" />
+        </EntityType>
+        <EntityType Name="TBL_COORDS">
+          <Key>
+            <PropertyRef Name="COORD_ID" />
+          </Key>
+          <Property Type="Int32" Name="COORD_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="LATITUDE" Nullable="false" Precision="9" Scale="6" />
+          <Property Type="Decimal" Name="LONGITUDE" Nullable="false" Precision="9" Scale="6" />
+        </EntityType>
+        <EntityType Name="TBL_SEARCH_HISTORY">
+          <Key>
+            <PropertyRef Name="SEARCH_ID" />
+          </Key>
+          <Property Type="Int32" Name="SEARCH_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="USER_ID" Nullable="false" />
+          <Property Type="String" Name="SEACH_TEXT" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TBL_USER" Relationship="SocialHeatMapModel.FK_SearchHistory_User" FromRole="TBL_SEARCH_HISTORY" ToRole="TBL_USER" />
+          <Property Type="String" Name="RESULTS" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CREATED_DT" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SearchHistory_User">
+          <End Type="SocialHeatMapModel.TBL_USER" Role="TBL_USER" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.TBL_SEARCH_HISTORY" Role="TBL_SEARCH_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TBL_SEARCH_HISTORY">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SocialHeatMapModelStoreContainer" CdmEntityContainer="SocialHeatMapEntities">
+          <EntitySetMapping Name="TBL_USER"><EntityTypeMapping TypeName="SocialHeatMapModel.TBL_USER"><MappingFragment StoreEntitySet="TBL_USER">
+            <ScalarProperty Name="ACCESS_TOKEN_SECRET" ColumnName="ACCESS_TOKEN_SECRET" />
+                <ScalarProperty Name="ACCESS_TOKEN" ColumnName="ACCESS_TOKEN" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+            <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+            <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+            <ScalarProperty Name="SCREENNAME" ColumnName="SCREENNAME" />
+            <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
+            <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="TBL_COORDS">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.TBL_COORDS">
+              <MappingFragment StoreEntitySet="TBL_COORDS">
+                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+                <ScalarProperty Name="COORD_ID" ColumnName="COORD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_SEARCH_HISTORY">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.TBL_SEARCH_HISTORY">
+              <MappingFragment StoreEntitySet="TBL_SEARCH_HISTORY">
+                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
+                <ScalarProperty Name="RESULTS" ColumnName="RESULTS" />
+                <ScalarProperty Name="SEACH_TEXT" ColumnName="SEACH_TEXT" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="SEARCH_ID" ColumnName="SEARCH_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="SHMModel">
+        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_USER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.172587890625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_COORDS" Width="1.5" PointX="3.375" PointY="0.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_SEARCH_HISTORY" Width="1.5" PointX="3.25" PointY="3.25" Height="1.787985026041667" />
+        <AssociationConnector Association="SocialHeatMapModel.FK_SearchHistory_User" >
+          <ConnectorPoint PointX="2.25" PointY="2.8290912968749997" />
+          <ConnectorPoint PointX="3.28125" PointY="2.8290912968749997" />
+          <ConnectorPoint PointX="3.28125" PointY="3.25" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,132 @@
+﻿@model HomeModel
+@{
+    ViewBag.Title = "Social HeatMap";
+}
+
+@section ScriptContent { 
+    @if (Model.Tweets.Count > 0 && Model.Tweets.Where(x => x.Location != null).Count() > 0)
+    {
+        string dataString = "";
+        foreach (TwitterStatus item in Model.Tweets.Where(x => x.Location != null))
+        {
+            dataString += "new google.maps.LatLng(" + item.Location.Coordinates.Latitude + ", " + item.Location.Coordinates.Longitude + "),";
+        }
+        //remove last comma
+        dataString = dataString.Substring(0, dataString.Length - 1);
+        
+        <script type="text/javascript">
+        $(document).ready(function () {
+            var heatMapData = [ @dataString ];
+
+            var sanFrancisco = new google.maps.LatLng(37.774546, -90.433523);
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), {
+                center: sanFrancisco,
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatMapData,
+                radius: 13
+            });
+        
+            heatmap.setMap(map);
+
+            $("#resultsTbl").tablesorter({widgets: ['zebra']}).tablesorterPager(
+                {
+                    container: $(".pager"),
+                    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
+                    fixedHeight: true,
+                    removeRows: false,
+                    cssGoto: '.gotoPage'
+                });
+        });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+        $(document).ready(function () {
+            var sanFrancisco = new google.maps.LatLng(37.774546, -90.433523);
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), {
+                center: sanFrancisco,
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        });
+        </script>
+    }
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div style="float:left;" >Enter search term</div>
+        <div style="float:left;padding:0px 0px 10px 10px;margin-top:-10px;">@Html.TextBox("searchTerm") <input type="submit" value="Search" /></div>
+    }
+
+    if (Model.PreviousSearches != null && Model.PreviousSearches.Count() > 0)
+    {
+        using (Html.BeginForm("PreviousSearch", "Home", FormMethod.Post))
+        {
+            <div style="float:right;">
+                <div style="float:left;" >Previous Searches</div>
+                <div style="float:left;padding:0px 0px 10px 10px;margin-top:-10px;">@Html.DropDownListFor(x => x.SelectedSearchId, Model.PreviousSearches)<input type="submit" value="Go" /></div>
+            </div>
+        }
+    }
+}
+else
+{
+    @:Please @Html.ActionLink("log on", "LogOn", "Account") to search tweets.
+}
+<br /><br />
+<div id="map-canvas" style="width: 100%; height: 600px"></div>
+<br /><br />
+@if (Model.Tweets.Count > 0)
+{ 
+    
+    <div>
+    @Model.Tweets.Count tweets (@Model.Tweets.Where(x => x.Location != null).Count() with gelocation data)
+    </div>
+    
+    <table id="resultsTbl" class="tablesorter tablesorter-blue">
+        <thead>
+            <tr>
+                <th>Tweet Text</th>
+                <th>By User</th>
+            </tr>
+        </thead>
+        <tfoot>            
+            <tr>
+                <td class="pager" colspan="2">
+                    Page: <select class="gotoPage"></select>
+                    <img src="/content/images/first.png" class="first"/>
+                    <img src="/content/images/prev.png" class="prev"/>
+                    <span class="pagedisplay"></span>
+                    <img src="/content/images/next.png" class="next"/>
+                    <img src="/content/images/last.png" class="last"/>
+                    <select class="pagesize">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (TwitterStatus item in Model.Tweets)
+            {
+                <tr>
+                    <td>@Html.Raw(item.TextAsHtml)</td>
+                    <td>@item.User.Name</td>
+                </tr>
+            }
+        </tbody>
+            
+    </table>
+}

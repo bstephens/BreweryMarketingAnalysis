@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <link rel="stylesheet" href="/Content/themes/blue/style.css" type="text/css" />
+    <link rel="stylesheet" href="/Content/jquery.tablesorter.pager.css" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUxAxYoq3wxHI7Gtvj9t4lB-MKTPk9H4E&libraries=visualization&sensor=false"></script> 
+    <script type="text/javascript" src="/Scripts/jquery.tablesorter.min.js"></script>   
+    <script type="text/javascript" src="/Scripts/jquery.tablesorter.pager.min.js"></script>   
+    @RenderSection("ScriptContent", required: false)
+</head>
+<body>
+    <div class="page">
+        <div id="header">
+            <div id="title">
+                <h1>Social HeatMap</h1>
+            </div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
+            <div id="menucontainer">
+                <ul id="menu">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Admin", "Home", "Admin")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            @RenderBody()
+            <br />
+        </div>
+        <div id="footer">
+        </div>
+    </div>
+</body>
+</html>

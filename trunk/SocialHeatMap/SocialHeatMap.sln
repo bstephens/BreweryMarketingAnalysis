@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialHeatMap", "SocialHeatMap\SocialHeatMap.csproj", "{21A43B23-F2EB-4A7F-8EF1-CA8C94BBC4BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialHeatMap.DataServices", "SocialHeatMap.DataServices\SocialHeatMap.DataServices.csproj", "{D9623AB7-8EDF-47FA-B8E7-CECFE944EFCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21A43B23-F2EB-4A7F-8EF1-CA8C94BBC4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A43B23-F2EB-4A7F-8EF1-CA8C94BBC4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A43B23-F2EB-4A7F-8EF1-CA8C94BBC4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A43B23-F2EB-4A7F-8EF1-CA8C94BBC4BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9623AB7-8EDF-47FA-B8E7-CECFE944EFCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9623AB7-8EDF-47FA-B8E7-CECFE944EFCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9623AB7-8EDF-47FA-B8E7-CECFE944EFCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9623AB7-8EDF-47FA-B8E7-CECFE944EFCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
