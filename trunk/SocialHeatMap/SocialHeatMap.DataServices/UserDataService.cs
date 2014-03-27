@@ -6,7 +6,7 @@ using SocialHeatMap.DataServices.DataEntities;
 
 namespace SocialHeatMap.DataServices
 {
-    public class UserDataService
+    public static class UserDataService
     {
         public static UserEntity SaveUser(string username, string name, string accessToken, string accessTokenSecret)
         {
@@ -15,38 +15,39 @@ namespace SocialHeatMap.DataServices
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
 
-                TBL_USER dbUser = (from a in context.TBL_USER
-                                   where a.SCREENNAME == username
+                User dbUser = (from a in context.Users
+                                   where a.ScreenName == username
                                    select a).ToList().FirstOrDefault();
 
                 if (dbUser == null)
                 {
-                    dbUser = new TBL_USER();
-                    dbUser.SCREENNAME = username;
-                    dbUser.FIRST_NAME = name;
-                    dbUser.LAST_NAME = name;
-                    dbUser.CREATED_DT = DateTime.Now;
-                    dbUser.IS_ADMIN = false;
+                    dbUser = new User();
+                    dbUser.ScreenName = username;
+                    dbUser.FirstName = name;
+                    dbUser.LastName = name;
+                    dbUser.CreatedOn = DateTime.Now;
+                    dbUser.IsAdmin = false;
+                    dbUser.IsSubscribed = false;
 
-                    context.TBL_USER.AddObject(dbUser);
+                    context.Users.AddObject(dbUser);
                 }
 
-                dbUser.ACCESS_TOKEN = accessToken;
-                dbUser.ACCESS_TOKEN_SECRET = accessTokenSecret;
+                dbUser.AccessToken = accessToken;
+                dbUser.AccessTokenSecret = accessTokenSecret;
 
                 context.SaveChanges();
 
-                result = (from a in context.TBL_USER
-                          where a.SCREENNAME == username
+                result = (from a in context.Users
+                          where a.ScreenName == username
                           select new UserEntity()
                           {
-                              UserId = a.USER_ID,
-                              Name = a.FIRST_NAME,
-                              ScreenName = a.SCREENNAME,
-                              IsAdmin = a.IS_ADMIN,
-                              AccessToken = a.ACCESS_TOKEN,
-                              AccessTokenSecret = a.ACCESS_TOKEN_SECRET,
-                              CreatedDt = a.CREATED_DT
+                              UserId = a.UserID,
+                              Name = a.FirstName,
+                              ScreenName = a.ScreenName,
+                              IsAdmin = a.IsAdmin,
+                              AccessToken = a.AccessToken,
+                              AccessTokenSecret = a.AccessTokenSecret,
+                              CreatedDt = a.CreatedOn
                           }).First();
             }
 
@@ -59,17 +60,17 @@ namespace SocialHeatMap.DataServices
 
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
-                result = (from a in context.TBL_USER
-                          where a.SCREENNAME == username
+                result = (from a in context.Users
+                          where a.ScreenName == username
                           select new UserEntity()
                           {
-                              UserId = a.USER_ID,
-                              Name = a.FIRST_NAME,
-                              ScreenName = a.SCREENNAME,
-                              IsAdmin = a.IS_ADMIN,
-                              AccessToken = a.ACCESS_TOKEN,
-                              AccessTokenSecret = a.ACCESS_TOKEN_SECRET,
-                              CreatedDt = a.CREATED_DT
+                              UserId = a.UserID,
+                              Name = a.FirstName,
+                              ScreenName = a.ScreenName,
+                              IsAdmin = a.IsAdmin,
+                              AccessToken = a.AccessToken,
+                              AccessTokenSecret = a.AccessTokenSecret,
+                              CreatedDt = a.CreatedOn
                           }).First();
             }
 
@@ -82,16 +83,16 @@ namespace SocialHeatMap.DataServices
 
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
-                result = (from a in context.TBL_USER
+                result = (from a in context.Users
                           select new UserEntity()
                           {
-                              UserId = a.USER_ID,
-                              Name = a.FIRST_NAME,
-                              ScreenName = a.SCREENNAME,
-                              IsAdmin = a.IS_ADMIN,
-                              AccessToken = a.ACCESS_TOKEN,
-                              AccessTokenSecret = a.ACCESS_TOKEN_SECRET,
-                              CreatedDt = a.CREATED_DT
+                              UserId = a.UserID,
+                              Name = a.FirstName,
+                              ScreenName = a.ScreenName,
+                              IsAdmin = a.IsAdmin,
+                              AccessToken = a.AccessToken,
+                              AccessTokenSecret = a.AccessTokenSecret,
+                              CreatedDt = a.CreatedOn
                           }).ToList();
             }
 

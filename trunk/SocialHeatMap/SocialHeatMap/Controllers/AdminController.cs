@@ -24,7 +24,7 @@ namespace SocialHeatMap.Controllers
 
         public ActionResult ClearSearches()
         {
-            AdminDataService.ClearSearches();
+            //AdminDataService.ClearSearches();
 
             return RedirectToAction("Home", "Admin");
         }

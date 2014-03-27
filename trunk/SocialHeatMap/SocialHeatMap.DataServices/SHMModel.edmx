@@ -6,54 +6,252 @@
     <edmx:StorageModels>
     <Schema Namespace="SocialHeatMapModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="SocialHeatMapModelStoreContainer">
-          <EntitySet Name="TBL_COORDS" EntityType="SocialHeatMapModel.Store.TBL_COORDS" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TBL_SEARCH_HISTORY" EntityType="SocialHeatMapModel.Store.TBL_SEARCH_HISTORY" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="TBL_USER" EntityType="SocialHeatMapModel.Store.TBL_USER" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_SearchHistory_User" Association="SocialHeatMapModel.Store.FK_SearchHistory_User">
-            <End Role="TBL_USER" EntitySet="TBL_USER" />
-            <End Role="TBL_SEARCH_HISTORY" EntitySet="TBL_SEARCH_HISTORY" />
+          <EntitySet Name="AnnualSales" EntityType="SocialHeatMapModel.Store.AnnualSales" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Brand" EntityType="SocialHeatMapModel.Store.Brand" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BrewedAt" EntityType="SocialHeatMapModel.Store.BrewedAt" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Brewery" EntityType="SocialHeatMapModel.Store.Brewery" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Manufacturer" EntityType="SocialHeatMapModel.Store.Manufacturer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ranking" EntityType="SocialHeatMapModel.Store.Ranking" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SocialMediaInfo" EntityType="SocialHeatMapModel.Store.SocialMediaInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Type" EntityType="SocialHeatMapModel.Store.Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="SocialHeatMapModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_AnnualSales_Manufacturer" Association="SocialHeatMapModel.Store.FK_AnnualSales_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="AnnualSales" EntitySet="AnnualSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brand_Manufacturer" Association="SocialHeatMapModel.Store.FK_Brand_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Brand" EntitySet="Brand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brand_Type" Association="SocialHeatMapModel.Store.FK_Brand_Type">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="Brand" EntitySet="Brand" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BrewedAt_Brand" Association="SocialHeatMapModel.Store.FK_BrewedAt_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="BrewedAt" EntitySet="BrewedAt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BrewedAt_Brewery" Association="SocialHeatMapModel.Store.FK_BrewedAt_Brewery">
+            <End Role="Brewery" EntitySet="Brewery" />
+            <End Role="BrewedAt" EntitySet="BrewedAt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brewery_Manufacturer" Association="SocialHeatMapModel.Store.FK_Brewery_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="Brewery" EntitySet="Brewery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ranking_Band" Association="SocialHeatMapModel.Store.FK_Ranking_Band">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Ranking" EntitySet="Ranking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ranking_User" Association="SocialHeatMapModel.Store.FK_Ranking_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ranking" EntitySet="Ranking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SocialMediaInfo_Brand" Association="SocialHeatMapModel.Store.FK_SocialMediaInfo_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="SocialMediaInfo" EntitySet="SocialMediaInfo" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="TBL_COORDS">
+        <EntityType Name="AnnualSales">
           <Key>
-            <PropertyRef Name="COORD_ID" />
+            <PropertyRef Name="AnnualSalesID" />
           </Key>
-          <Property Name="COORD_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="LATITUDE" Type="decimal" Nullable="false" Precision="9" Scale="6" />
-          <Property Name="LONGITUDE" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+          <Property Name="AnnualSalesID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MfrID" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Sales" Type="decimal" Nullable="false" />
         </EntityType>
-        <EntityType Name="TBL_SEARCH_HISTORY">
+        <EntityType Name="Brand">
           <Key>
-            <PropertyRef Name="SEARCH_ID" />
+            <PropertyRef Name="BrandID" />
           </Key>
-          <Property Name="SEARCH_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="USER_ID" Type="int" Nullable="false" />
-          <Property Name="SEACH_TEXT" Type="varchar" Nullable="false" MaxLength="2000" />
-          <Property Name="RESULTS" Type="varchar(max)" Nullable="false" />
-          <Property Name="CREATED_DT" Type="datetime" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MfrID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="Alcohol" Type="decimal" Nullable="false" Precision="3" Scale="1" />
+          <Property Name="Calories" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="TBL_USER">
+        <EntityType Name="BrewedAt">
           <Key>
-            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="BrandID" />
+            <PropertyRef Name="BreweryID" />
           </Key>
-          <Property Name="USER_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="FIRST_NAME" Type="varchar" Nullable="false" MaxLength="2000" />
-          <Property Name="LAST_NAME" Type="varchar" Nullable="false" MaxLength="2000" />
-          <Property Name="SCREENNAME" Type="varchar" Nullable="false" MaxLength="2000" />
-          <Property Name="IS_ADMIN" Type="bit" Nullable="false" />
-          <Property Name="CREATED_DT" Type="datetime" Nullable="false" />
-          <Property Name="ACCESS_TOKEN" Type="varchar" Nullable="false" MaxLength="2000" />
-          <Property Name="ACCESS_TOKEN_SECRET" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="BreweryID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_SearchHistory_User">
-          <End Role="TBL_USER" Type="SocialHeatMapModel.Store.TBL_USER" Multiplicity="1" />
-          <End Role="TBL_SEARCH_HISTORY" Type="SocialHeatMapModel.Store.TBL_SEARCH_HISTORY" Multiplicity="*" />
+        <EntityType Name="Brewery">
+          <Key>
+            <PropertyRef Name="BreweryID" />
+          </Key>
+          <Property Name="BreweryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MfrID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="int" Nullable="false" />
+          <Property Name="Opened" Type="datetime" Nullable="false" />
+          <Property Name="City" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="State" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Country" Type="varchar" Nullable="false" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="MfrID" />
+          </Key>
+          <Property Name="MfrID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Country" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="City" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="State" Type="varchar" Nullable="false" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Ranking">
+          <Key>
+            <PropertyRef Name="RankingID" />
+          </Key>
+          <Property Name="RankingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SocialMediaInfo">
+          <Key>
+            <PropertyRef Name="SocialMediaInfoID" />
+          </Key>
+          <Property Name="SocialMediaInfoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="Information" Type="varchar(max)" Nullable="false" />
+          <Property Name="Latitude" Type="float" Nullable="false" />
+          <Property Name="Longitude" Type="float" Nullable="false" />
+          <Property Name="SearchDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="ScreenName" Type="varchar" Nullable="false" MaxLength="45" />
+          <Property Name="AccessToken" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="AccessTokenSecret" Type="varchar" Nullable="false" MaxLength="2000" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="IsSubscribed" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AnnualSales_Manufacturer">
+          <End Role="Manufacturer" Type="SocialHeatMapModel.Store.Manufacturer" Multiplicity="1" />
+          <End Role="AnnualSales" Type="SocialHeatMapModel.Store.AnnualSales" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TBL_USER">
-              <PropertyRef Name="USER_ID" />
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
             </Principal>
-            <Dependent Role="TBL_SEARCH_HISTORY">
-              <PropertyRef Name="USER_ID" />
+            <Dependent Role="AnnualSales">
+              <PropertyRef Name="MfrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brand_Manufacturer">
+          <End Role="Manufacturer" Type="SocialHeatMapModel.Store.Manufacturer" Multiplicity="1" />
+          <End Role="Brand" Type="SocialHeatMapModel.Store.Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="MfrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brand_Type">
+          <End Role="Type" Type="SocialHeatMapModel.Store.Type" Multiplicity="1" />
+          <End Role="Brand" Type="SocialHeatMapModel.Store.Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BrewedAt_Brand">
+          <End Role="Brand" Type="SocialHeatMapModel.Store.Brand" Multiplicity="1" />
+          <End Role="BrewedAt" Type="SocialHeatMapModel.Store.BrewedAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="BrewedAt">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BrewedAt_Brewery">
+          <End Role="Brewery" Type="SocialHeatMapModel.Store.Brewery" Multiplicity="1" />
+          <End Role="BrewedAt" Type="SocialHeatMapModel.Store.BrewedAt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brewery">
+              <PropertyRef Name="BreweryID" />
+            </Principal>
+            <Dependent Role="BrewedAt">
+              <PropertyRef Name="BreweryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brewery_Manufacturer">
+          <End Role="Manufacturer" Type="SocialHeatMapModel.Store.Manufacturer" Multiplicity="1" />
+          <End Role="Brewery" Type="SocialHeatMapModel.Store.Brewery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
+            </Principal>
+            <Dependent Role="Brewery">
+              <PropertyRef Name="MfrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ranking_Band">
+          <End Role="Brand" Type="SocialHeatMapModel.Store.Brand" Multiplicity="1" />
+          <End Role="Ranking" Type="SocialHeatMapModel.Store.Ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="Ranking">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ranking_User">
+          <End Role="Users" Type="SocialHeatMapModel.Store.Users" Multiplicity="1" />
+          <End Role="Ranking" Type="SocialHeatMapModel.Store.Ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Ranking">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SocialMediaInfo_Brand">
+          <End Role="Brand" Type="SocialHeatMapModel.Store.Brand" Multiplicity="1" />
+          <End Role="SocialMediaInfo" Type="SocialHeatMapModel.Store.SocialMediaInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="SocialMediaInfo">
+              <PropertyRef Name="BrandID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -62,58 +260,237 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SocialHeatMapModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="SocialHeatMapEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TBL_USER" EntityType="SocialHeatMapModel.TBL_USER" />
-          <EntitySet Name="TBL_COORDS" EntityType="SocialHeatMapModel.TBL_COORDS" />
-          <EntitySet Name="TBL_SEARCH_HISTORY" EntityType="SocialHeatMapModel.TBL_SEARCH_HISTORY" />
-          <AssociationSet Name="FK_SearchHistory_User" Association="SocialHeatMapModel.FK_SearchHistory_User">
-            <End Role="TBL_USER" EntitySet="TBL_USER" />
-            <End Role="TBL_SEARCH_HISTORY" EntitySet="TBL_SEARCH_HISTORY" />
+          <EntitySet Name="AnnualSales" EntityType="SocialHeatMapModel.AnnualSale" />
+          <EntitySet Name="Brands" EntityType="SocialHeatMapModel.Brand" />
+          <EntitySet Name="Breweries" EntityType="SocialHeatMapModel.Brewery" />
+          <EntitySet Name="Manufacturers" EntityType="SocialHeatMapModel.Manufacturer" />
+          <EntitySet Name="Rankings" EntityType="SocialHeatMapModel.Ranking" />
+          <EntitySet Name="SocialMediaInfoes" EntityType="SocialHeatMapModel.SocialMediaInfo" />
+          <EntitySet Name="Types" EntityType="SocialHeatMapModel.Type" />
+          <EntitySet Name="Users" EntityType="SocialHeatMapModel.User" />
+          <AssociationSet Name="FK_AnnualSales_Manufacturer" Association="SocialHeatMapModel.FK_AnnualSales_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="AnnualSale" EntitySet="AnnualSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brand_Manufacturer" Association="SocialHeatMapModel.FK_Brand_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Brand" EntitySet="Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brand_Type" Association="SocialHeatMapModel.FK_Brand_Type">
+            <End Role="Type" EntitySet="Types" />
+            <End Role="Brand" EntitySet="Brands" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ranking_Band" Association="SocialHeatMapModel.FK_Ranking_Band">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Ranking" EntitySet="Rankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SocialMediaInfo_Brand" Association="SocialHeatMapModel.FK_SocialMediaInfo_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="SocialMediaInfo" EntitySet="SocialMediaInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Brewery_Manufacturer" Association="SocialHeatMapModel.FK_Brewery_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+            <End Role="Brewery" EntitySet="Breweries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ranking_User" Association="SocialHeatMapModel.FK_Ranking_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ranking" EntitySet="Rankings" />
+          </AssociationSet>
+          <AssociationSet Name="BrewedAt" Association="SocialHeatMapModel.BrewedAt">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Brewery" EntitySet="Breweries" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="TBL_USER">
+        <EntityType Name="AnnualSale">
           <Key>
-            <PropertyRef Name="USER_ID" />
+            <PropertyRef Name="AnnualSalesID" />
           </Key>
-          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FIRST_NAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
-          <Property Name="LAST_NAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
-          <Property Name="SCREENNAME" Type="String" Nullable="false" MaxLength="2000" Unicode="false" FixedLength="false" />
-          <Property Name="IS_ADMIN" Type="Boolean" Nullable="false" />
-          <Property Name="CREATED_DT" Type="DateTime" Nullable="false" />
-          <Property Type="String" Name="ACCESS_TOKEN" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ACCESS_TOKEN_SECRET" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TBL_SEARCH_HISTORY" Relationship="SocialHeatMapModel.FK_SearchHistory_User" FromRole="TBL_USER" ToRole="TBL_SEARCH_HISTORY" />
+          <Property Type="Int32" Name="AnnualSalesID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MfrID" Nullable="false" />
+          <Property Type="Int32" Name="Year" Nullable="false" />
+          <Property Type="Decimal" Name="Sales" Nullable="false" Precision="18" Scale="0" />
+          <NavigationProperty Name="Manufacturer" Relationship="SocialHeatMapModel.FK_AnnualSales_Manufacturer" FromRole="AnnualSale" ToRole="Manufacturer" />
         </EntityType>
-        <EntityType Name="TBL_COORDS">
+        <EntityType Name="Brand">
           <Key>
-            <PropertyRef Name="COORD_ID" />
+            <PropertyRef Name="BrandID" />
           </Key>
-          <Property Type="Int32" Name="COORD_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Decimal" Name="LATITUDE" Nullable="false" Precision="9" Scale="6" />
-          <Property Type="Decimal" Name="LONGITUDE" Nullable="false" Precision="9" Scale="6" />
+          <Property Type="Int32" Name="BrandID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MfrID" Nullable="false" />
+          <Property Type="Int32" Name="TypeID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" />
+          <Property Type="Decimal" Name="Alcohol" Nullable="false" Precision="3" Scale="1" />
+          <Property Type="Int32" Name="Calories" Nullable="false" />
+          <NavigationProperty Name="Manufacturer" Relationship="SocialHeatMapModel.FK_Brand_Manufacturer" FromRole="Brand" ToRole="Manufacturer" />
+          <NavigationProperty Name="Type" Relationship="SocialHeatMapModel.FK_Brand_Type" FromRole="Brand" ToRole="Type" />
+          <NavigationProperty Name="Rankings" Relationship="SocialHeatMapModel.FK_Ranking_Band" FromRole="Brand" ToRole="Ranking" />
+          <NavigationProperty Name="SocialMediaInfoes" Relationship="SocialHeatMapModel.FK_SocialMediaInfo_Brand" FromRole="Brand" ToRole="SocialMediaInfo" />
+          <NavigationProperty Name="Breweries" Relationship="SocialHeatMapModel.BrewedAt" FromRole="Brand" ToRole="Brewery" />
         </EntityType>
-        <EntityType Name="TBL_SEARCH_HISTORY">
+        <EntityType Name="Brewery">
           <Key>
-            <PropertyRef Name="SEARCH_ID" />
+            <PropertyRef Name="BreweryID" />
           </Key>
-          <Property Type="Int32" Name="SEARCH_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="USER_ID" Nullable="false" />
-          <Property Type="String" Name="SEACH_TEXT" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="TBL_USER" Relationship="SocialHeatMapModel.FK_SearchHistory_User" FromRole="TBL_SEARCH_HISTORY" ToRole="TBL_USER" />
-          <Property Type="String" Name="RESULTS" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CREATED_DT" Nullable="false" />
+          <Property Type="Int32" Name="BreweryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MfrID" Nullable="false" />
+          <Property Type="Int32" Name="Name" Nullable="false" />
+          <Property Type="DateTime" Name="Opened" Nullable="false" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Country" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Manufacturer" Relationship="SocialHeatMapModel.FK_Brewery_Manufacturer" FromRole="Brewery" ToRole="Manufacturer" />
+          <NavigationProperty Name="Brands" Relationship="SocialHeatMapModel.BrewedAt" FromRole="Brewery" ToRole="Brand" />
         </EntityType>
-        <Association Name="FK_SearchHistory_User">
-          <End Type="SocialHeatMapModel.TBL_USER" Role="TBL_USER" Multiplicity="1" />
-          <End Type="SocialHeatMapModel.TBL_SEARCH_HISTORY" Role="TBL_SEARCH_HISTORY" Multiplicity="*" />
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="MfrID" />
+          </Key>
+          <Property Type="Int32" Name="MfrID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Country" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Capacity" Nullable="false" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="State" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AnnualSales" Relationship="SocialHeatMapModel.FK_AnnualSales_Manufacturer" FromRole="Manufacturer" ToRole="AnnualSale" />
+          <NavigationProperty Name="Brands" Relationship="SocialHeatMapModel.FK_Brand_Manufacturer" FromRole="Manufacturer" ToRole="Brand" />
+          <NavigationProperty Name="Breweries" Relationship="SocialHeatMapModel.FK_Brewery_Manufacturer" FromRole="Manufacturer" ToRole="Brewery" />
+        </EntityType>
+        <EntityType Name="Ranking">
+          <Key>
+            <PropertyRef Name="RankingID" />
+          </Key>
+          <Property Type="Int32" Name="RankingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Int32" Name="BrandID" Nullable="false" />
+          <Property Type="Int32" Name="Score" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="SocialHeatMapModel.FK_Ranking_Band" FromRole="Ranking" ToRole="Brand" />
+          <NavigationProperty Name="User" Relationship="SocialHeatMapModel.FK_Ranking_User" FromRole="Ranking" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SocialMediaInfo">
+          <Key>
+            <PropertyRef Name="SocialMediaInfoID" />
+          </Key>
+          <Property Type="Int32" Name="SocialMediaInfoID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="BrandID" Nullable="false" />
+          <Property Type="String" Name="Information" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Latitude" Nullable="false" />
+          <Property Type="Double" Name="Longitude" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="SocialHeatMapModel.FK_SocialMediaInfo_Brand" FromRole="SocialMediaInfo" ToRole="Brand" />
+          <Property Type="DateTime" Name="SearchDate" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Type="Int32" Name="TypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Brands" Relationship="SocialHeatMapModel.FK_Brand_Type" FromRole="Type" ToRole="Brand" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ScreenName" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AccessToken" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AccessTokenSecret" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsAdmin" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="Boolean" Name="IsSubscribed" Nullable="false" />
+          <NavigationProperty Name="Rankings" Relationship="SocialHeatMapModel.FK_Ranking_User" FromRole="User" ToRole="Ranking" />
+        </EntityType>
+        <Association Name="FK_AnnualSales_Manufacturer">
+          <End Type="SocialHeatMapModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.AnnualSale" Role="AnnualSale" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TBL_USER">
-              <PropertyRef Name="USER_ID" />
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
             </Principal>
-            <Dependent Role="TBL_SEARCH_HISTORY">
-              <PropertyRef Name="USER_ID" />
+            <Dependent Role="AnnualSale">
+              <PropertyRef Name="MfrID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brand_Manufacturer">
+          <End Type="SocialHeatMapModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.Brand" Role="Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="MfrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brand_Type">
+          <End Type="SocialHeatMapModel.Type" Role="Type" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.Brand" Role="Brand" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="Brand">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ranking_Band">
+          <End Type="SocialHeatMapModel.Brand" Role="Brand" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.Ranking" Role="Ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="Ranking">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SocialMediaInfo_Brand">
+          <End Type="SocialHeatMapModel.Brand" Role="Brand" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.SocialMediaInfo" Role="SocialMediaInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="SocialMediaInfo">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Brewery_Manufacturer">
+          <End Type="SocialHeatMapModel.Manufacturer" Role="Manufacturer" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.Brewery" Role="Brewery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="MfrID" />
+            </Principal>
+            <Dependent Role="Brewery">
+              <PropertyRef Name="MfrID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ranking_User">
+          <End Type="SocialHeatMapModel.User" Role="User" Multiplicity="1" />
+          <End Type="SocialHeatMapModel.Ranking" Role="Ranking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Ranking">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BrewedAt">
+          <End Type="SocialHeatMapModel.Brand" Role="Brand" Multiplicity="*" />
+          <End Type="SocialHeatMapModel.Brewery" Role="Brewery" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -121,36 +498,109 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SocialHeatMapModelStoreContainer" CdmEntityContainer="SocialHeatMapEntities">
-          <EntitySetMapping Name="TBL_USER"><EntityTypeMapping TypeName="SocialHeatMapModel.TBL_USER"><MappingFragment StoreEntitySet="TBL_USER">
-            <ScalarProperty Name="ACCESS_TOKEN_SECRET" ColumnName="ACCESS_TOKEN_SECRET" />
-                <ScalarProperty Name="ACCESS_TOKEN" ColumnName="ACCESS_TOKEN" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-            <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
-            <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
-            <ScalarProperty Name="SCREENNAME" ColumnName="SCREENNAME" />
-            <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
-            <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="TBL_COORDS">
-            <EntityTypeMapping TypeName="SocialHeatMapModel.TBL_COORDS">
-              <MappingFragment StoreEntitySet="TBL_COORDS">
-                <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
-                <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
-                <ScalarProperty Name="COORD_ID" ColumnName="COORD_ID" />
+          <EntitySetMapping Name="AnnualSales">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.AnnualSale">
+              <MappingFragment StoreEntitySet="AnnualSales">
+                <ScalarProperty Name="Sales" ColumnName="Sales" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="MfrID" ColumnName="MfrID" />
+                <ScalarProperty Name="AnnualSalesID" ColumnName="AnnualSalesID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TBL_SEARCH_HISTORY">
-            <EntityTypeMapping TypeName="SocialHeatMapModel.TBL_SEARCH_HISTORY">
-              <MappingFragment StoreEntitySet="TBL_SEARCH_HISTORY">
-                <ScalarProperty Name="CREATED_DT" ColumnName="CREATED_DT" />
-                <ScalarProperty Name="RESULTS" ColumnName="RESULTS" />
-                <ScalarProperty Name="SEACH_TEXT" ColumnName="SEACH_TEXT" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="SEARCH_ID" ColumnName="SEARCH_ID" />
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Calories" ColumnName="Calories" />
+                <ScalarProperty Name="Alcohol" ColumnName="Alcohol" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="MfrID" ColumnName="MfrID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Breweries">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.Brewery">
+              <MappingFragment StoreEntitySet="Brewery">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Opened" ColumnName="Opened" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MfrID" ColumnName="MfrID" />
+                <ScalarProperty Name="BreweryID" ColumnName="BreweryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MfrID" ColumnName="MfrID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rankings">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.Ranking">
+              <MappingFragment StoreEntitySet="Ranking">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RankingID" ColumnName="RankingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SocialMediaInfoes">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.SocialMediaInfo">
+              <MappingFragment StoreEntitySet="SocialMediaInfo">
+                <ScalarProperty Name="SearchDate" ColumnName="SearchDate" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Information" ColumnName="Information" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="SocialMediaInfoID" ColumnName="SocialMediaInfoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Types">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SocialHeatMapModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsSubscribed" ColumnName="IsSubscribed" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="AccessTokenSecret" ColumnName="AccessTokenSecret" />
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="ScreenName" ColumnName="ScreenName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="BrewedAt" TypeName="SocialHeatMapModel.BrewedAt" StoreEntitySet="BrewedAt">
+            <EndProperty Name="Brewery">
+              <ScalarProperty Name="BreweryID" ColumnName="BreweryID" />
+            </EndProperty>
+            <EndProperty Name="Brand">
+              <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -171,14 +621,50 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="SHMModel">
-        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_USER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.172587890625" IsExpanded="true" />
-        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_COORDS" Width="1.5" PointX="3.375" PointY="0.75" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="SocialHeatMapModel.TBL_SEARCH_HISTORY" Width="1.5" PointX="3.25" PointY="3.25" Height="1.787985026041667" />
-        <AssociationConnector Association="SocialHeatMapModel.FK_SearchHistory_User" >
-          <ConnectorPoint PointX="2.25" PointY="2.8290912968749997" />
-          <ConnectorPoint PointX="3.28125" PointY="2.8290912968749997" />
-          <ConnectorPoint PointX="3.28125" PointY="3.25" />
+      <Diagram Name="SHMModel" ZoomLevel="73">
+        <EntityTypeShape EntityType="SocialHeatMapModel.AnnualSale" Width="1.5" PointX="3.625" PointY="5" Height="1.9802864583333344" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.Brand" Width="1.5" PointX="6.375" PointY="5.5" Height="3.5186979166666648" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.Brewery" Width="1.5" PointX="8.875" PointY="4.5" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.Manufacturer" Width="1.5" PointX="6.625" PointY="0.875" Height="2.7494921875000005" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.Ranking" Width="1.5" PointX="11.875" PointY="4.875" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.SocialMediaInfo" Width="1.5" PointX="8.875" PointY="8.125" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.Type" Width="1.5" PointX="4.125" PointY="8.25" Height="1.787985026041671" />
+        <EntityTypeShape EntityType="SocialHeatMapModel.User" Width="1.5" PointX="9.625" PointY="0.5" Height="2.9417936197916745" />
+        <AssociationConnector Association="SocialHeatMapModel.FK_AnnualSales_Manufacturer" >
+          <ConnectorPoint PointX="6.625" PointY="2.2497460937500002" />
+          <ConnectorPoint PointX="4.375" PointY="2.2497460937500002" />
+          <ConnectorPoint PointX="4.375" PointY="5" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_Brand_Manufacturer" >
+          <ConnectorPoint PointX="7.25" PointY="3.6244921875000005" />
+          <ConnectorPoint PointX="7.25" PointY="5.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_Brand_Type" >
+          <ConnectorPoint PointX="5.625" PointY="8.6343489583333319" />
+          <ConnectorPoint PointX="6.375" PointY="8.6343489583333319" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_Ranking_Band" >
+          <ConnectorPoint PointX="7.875" PointY="7.68724609375" />
+          <ConnectorPoint PointX="12.625" PointY="7.68724609375" />
+          <ConnectorPoint PointX="12.625" PointY="7.047587890625" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_SocialMediaInfo_Brand" >
+          <ConnectorPoint PointX="7.875" PointY="8.5718489583333319" />
+          <ConnectorPoint PointX="8.875" PointY="8.5718489583333319" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_Brewery_Manufacturer" >
+          <ConnectorPoint PointX="8.125" PointY="3.5643929036458375" />
+          <ConnectorPoint PointX="9.21875" PointY="3.5643929036458375" />
+          <ConnectorPoint PointX="9.21875" PointY="4.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.FK_Ranking_User" >
+          <ConnectorPoint PointX="11.125" PointY="1.9708968098958373" />
+          <ConnectorPoint PointX="12.625" PointY="1.9708968098958373" />
+          <ConnectorPoint PointX="12.625" PointY="4.875" />
+        </AssociationConnector>
+        <AssociationConnector Association="SocialHeatMapModel.BrewedAt" >
+          <ConnectorPoint PointX="7.875" PointY="6.37474609375" />
+          <ConnectorPoint PointX="8.875" PointY="6.37474609375" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

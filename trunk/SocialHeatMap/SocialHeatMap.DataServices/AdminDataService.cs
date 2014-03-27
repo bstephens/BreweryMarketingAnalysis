@@ -5,14 +5,14 @@ using System.Text;
 
 namespace SocialHeatMap.DataServices
 {
-    public class AdminDataService
+    public static class AdminDataService
     {
-        public static void SaveSearchResults(string username, string searchString, string jsonResult)
+        /*public static void SaveSearchResults(string username, string searchString, string jsonResult)
         {
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
                 TBL_SEARCH_HISTORY tempItem = new TBL_SEARCH_HISTORY();
-                tempItem.USER_ID = (from a in context.TBL_USER where a.SCREENNAME == username select a.USER_ID).First();
+                tempItem.USER_ID = (from a in context.User where a.SCREENNAME == username select a.USER_ID).First();
                 tempItem.SEACH_TEXT = searchString;
                 tempItem.RESULTS = jsonResult;
                 tempItem.CREATED_DT = DateTime.Now;
@@ -28,8 +28,8 @@ namespace SocialHeatMap.DataServices
 
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
-                results = (from a in context.TBL_SEARCH_HISTORY.Include("TBL_USER")
-                           where String.IsNullOrEmpty(username) || a.TBL_USER.SCREENNAME == username
+                results = (from a in context.TBL_SEARCH_HISTORY.Include("User")
+                           where String.IsNullOrEmpty(username) || a.User.SCREENNAME == username
                            orderby a.CREATED_DT descending
                            select a).ToList();
             }
@@ -57,19 +57,19 @@ namespace SocialHeatMap.DataServices
             {
                 context.ExecuteStoreCommand("TRUNCATE TABLE dbo.TBL_SEARCH_HISTORY");
             }
-        }
+        }*/
 
         public static void ClearUserCredentials()
         {
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
-                List<TBL_USER> dbUsers = (from a in context.TBL_USER
+                List<User> dbUsers = (from a in context.Users
                                           select a).ToList();
 
-                foreach (TBL_USER user in dbUsers)
+                foreach (User user in dbUsers)
                 {
-                    user.ACCESS_TOKEN = "";
-                    user.ACCESS_TOKEN_SECRET = "";
+                    user.AccessToken = "";
+                    user.AccessTokenSecret = "";
                 }
 
                 context.SaveChanges();
@@ -80,11 +80,11 @@ namespace SocialHeatMap.DataServices
         {
             using (SocialHeatMapEntities context = new SocialHeatMapEntities())
             {
-                TBL_USER dbUser = (from a in context.TBL_USER
-                                   where a.USER_ID == userId
+                User dbUser = (from a in context.Users
+                                   where a.UserID == userId
                                    select a).First();
 
-                dbUser.IS_ADMIN = isAdmin;
+                dbUser.IsAdmin = isAdmin;
 
                 context.SaveChanges();
             }

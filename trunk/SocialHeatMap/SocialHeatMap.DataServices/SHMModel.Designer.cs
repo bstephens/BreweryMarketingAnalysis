@@ -8,17 +8,25 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_SearchHistory_User", "TBL_USER", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.TBL_USER), "TBL_SEARCH_HISTORY", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.TBL_SEARCH_HISTORY), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_AnnualSales_Manufacturer", "Manufacturer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Manufacturer), "AnnualSale", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.AnnualSale), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_Brand_Manufacturer", "Manufacturer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Manufacturer), "Brand", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Brand), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_Brand_Type", "Type", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Type), "Brand", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Brand), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_Ranking_Band", "Brand", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Brand), "Ranking", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Ranking), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_SocialMediaInfo_Brand", "Brand", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Brand), "SocialMediaInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.SocialMediaInfo), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_Brewery_Manufacturer", "Manufacturer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.Manufacturer), "Brewery", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Brewery), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "FK_Ranking_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SocialHeatMap.DataServices.User), "Ranking", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Ranking), true)]
+[assembly: EdmRelationshipAttribute("SocialHeatMapModel", "BrewedAt", "Brand", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Brand), "Brewery", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SocialHeatMap.DataServices.Brewery))]
 
 #endregion
 
@@ -73,112 +81,236 @@ namespace SocialHeatMap.DataServices
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TBL_USER> TBL_USER
+        public ObjectSet<AnnualSale> AnnualSales
         {
             get
             {
-                if ((_TBL_USER == null))
+                if ((_AnnualSales == null))
                 {
-                    _TBL_USER = base.CreateObjectSet<TBL_USER>("TBL_USER");
+                    _AnnualSales = base.CreateObjectSet<AnnualSale>("AnnualSales");
                 }
-                return _TBL_USER;
+                return _AnnualSales;
             }
         }
-        private ObjectSet<TBL_USER> _TBL_USER;
+        private ObjectSet<AnnualSale> _AnnualSales;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TBL_COORDS> TBL_COORDS
+        public ObjectSet<Brand> Brands
         {
             get
             {
-                if ((_TBL_COORDS == null))
+                if ((_Brands == null))
                 {
-                    _TBL_COORDS = base.CreateObjectSet<TBL_COORDS>("TBL_COORDS");
+                    _Brands = base.CreateObjectSet<Brand>("Brands");
                 }
-                return _TBL_COORDS;
+                return _Brands;
             }
         }
-        private ObjectSet<TBL_COORDS> _TBL_COORDS;
+        private ObjectSet<Brand> _Brands;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<TBL_SEARCH_HISTORY> TBL_SEARCH_HISTORY
+        public ObjectSet<Brewery> Breweries
         {
             get
             {
-                if ((_TBL_SEARCH_HISTORY == null))
+                if ((_Breweries == null))
                 {
-                    _TBL_SEARCH_HISTORY = base.CreateObjectSet<TBL_SEARCH_HISTORY>("TBL_SEARCH_HISTORY");
+                    _Breweries = base.CreateObjectSet<Brewery>("Breweries");
                 }
-                return _TBL_SEARCH_HISTORY;
+                return _Breweries;
             }
         }
-        private ObjectSet<TBL_SEARCH_HISTORY> _TBL_SEARCH_HISTORY;
+        private ObjectSet<Brewery> _Breweries;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Manufacturer> Manufacturers
+        {
+            get
+            {
+                if ((_Manufacturers == null))
+                {
+                    _Manufacturers = base.CreateObjectSet<Manufacturer>("Manufacturers");
+                }
+                return _Manufacturers;
+            }
+        }
+        private ObjectSet<Manufacturer> _Manufacturers;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Ranking> Rankings
+        {
+            get
+            {
+                if ((_Rankings == null))
+                {
+                    _Rankings = base.CreateObjectSet<Ranking>("Rankings");
+                }
+                return _Rankings;
+            }
+        }
+        private ObjectSet<Ranking> _Rankings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SocialMediaInfo> SocialMediaInfoes
+        {
+            get
+            {
+                if ((_SocialMediaInfoes == null))
+                {
+                    _SocialMediaInfoes = base.CreateObjectSet<SocialMediaInfo>("SocialMediaInfoes");
+                }
+                return _SocialMediaInfoes;
+            }
+        }
+        private ObjectSet<SocialMediaInfo> _SocialMediaInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Type> Types
+        {
+            get
+            {
+                if ((_Types == null))
+                {
+                    _Types = base.CreateObjectSet<Type>("Types");
+                }
+                return _Types;
+            }
+        }
+        private ObjectSet<Type> _Types;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<User> Users
+        {
+            get
+            {
+                if ((_Users == null))
+                {
+                    _Users = base.CreateObjectSet<User>("Users");
+                }
+                return _Users;
+            }
+        }
+        private ObjectSet<User> _Users;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TBL_USER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AnnualSales EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToTBL_USER(TBL_USER tBL_USER)
+        public void AddToAnnualSales(AnnualSale annualSale)
         {
-            base.AddObject("TBL_USER", tBL_USER);
+            base.AddObject("AnnualSales", annualSale);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TBL_COORDS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Brands EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToTBL_COORDS(TBL_COORDS tBL_COORDS)
+        public void AddToBrands(Brand brand)
         {
-            base.AddObject("TBL_COORDS", tBL_COORDS);
+            base.AddObject("Brands", brand);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the TBL_SEARCH_HISTORY EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Breweries EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToTBL_SEARCH_HISTORY(TBL_SEARCH_HISTORY tBL_SEARCH_HISTORY)
+        public void AddToBreweries(Brewery brewery)
         {
-            base.AddObject("TBL_SEARCH_HISTORY", tBL_SEARCH_HISTORY);
+            base.AddObject("Breweries", brewery);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Manufacturers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToManufacturers(Manufacturer manufacturer)
+        {
+            base.AddObject("Manufacturers", manufacturer);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Rankings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRankings(Ranking ranking)
+        {
+            base.AddObject("Rankings", ranking);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SocialMediaInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSocialMediaInfoes(SocialMediaInfo socialMediaInfo)
+        {
+            base.AddObject("SocialMediaInfoes", socialMediaInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Types EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTypes(Type type)
+        {
+            base.AddObject("Types", type);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Users EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUsers(User user)
+        {
+            base.AddObject("Users", user);
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="TBL_COORDS")]
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="AnnualSale")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class TBL_COORDS : EntityObject
+    public partial class AnnualSale : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new TBL_COORDS object.
+        /// Create a new AnnualSale object.
         /// </summary>
-        /// <param name="cOORD_ID">Initial value of the COORD_ID property.</param>
-        /// <param name="lATITUDE">Initial value of the LATITUDE property.</param>
-        /// <param name="lONGITUDE">Initial value of the LONGITUDE property.</param>
-        public static TBL_COORDS CreateTBL_COORDS(global::System.Int32 cOORD_ID, global::System.Decimal lATITUDE, global::System.Decimal lONGITUDE)
+        /// <param name="annualSalesID">Initial value of the AnnualSalesID property.</param>
+        /// <param name="mfrID">Initial value of the MfrID property.</param>
+        /// <param name="year">Initial value of the Year property.</param>
+        /// <param name="sales">Initial value of the Sales property.</param>
+        public static AnnualSale CreateAnnualSale(global::System.Int32 annualSalesID, global::System.Int32 mfrID, global::System.Int32 year, global::System.Decimal sales)
         {
-            TBL_COORDS tBL_COORDS = new TBL_COORDS();
-            tBL_COORDS.COORD_ID = cOORD_ID;
-            tBL_COORDS.LATITUDE = lATITUDE;
-            tBL_COORDS.LONGITUDE = lONGITUDE;
-            return tBL_COORDS;
+            AnnualSale annualSale = new AnnualSale();
+            annualSale.AnnualSalesID = annualSalesID;
+            annualSale.MfrID = mfrID;
+            annualSale.Year = year;
+            annualSale.Sales = sales;
+            return annualSale;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -186,236 +318,102 @@ namespace SocialHeatMap.DataServices
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 COORD_ID
+        public global::System.Int32 AnnualSalesID
         {
             get
             {
-                return _COORD_ID;
+                return _AnnualSalesID;
             }
             set
             {
-                if (_COORD_ID != value)
+                if (_AnnualSalesID != value)
                 {
-                    OnCOORD_IDChanging(value);
-                    ReportPropertyChanging("COORD_ID");
-                    _COORD_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("COORD_ID");
-                    OnCOORD_IDChanged();
+                    OnAnnualSalesIDChanging(value);
+                    ReportPropertyChanging("AnnualSalesID");
+                    _AnnualSalesID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AnnualSalesID");
+                    OnAnnualSalesIDChanged();
                 }
             }
         }
-        private global::System.Int32 _COORD_ID;
-        partial void OnCOORD_IDChanging(global::System.Int32 value);
-        partial void OnCOORD_IDChanged();
+        private global::System.Int32 _AnnualSalesID;
+        partial void OnAnnualSalesIDChanging(global::System.Int32 value);
+        partial void OnAnnualSalesIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal LATITUDE
+        public global::System.Int32 MfrID
         {
             get
             {
-                return _LATITUDE;
+                return _MfrID;
             }
             set
             {
-                OnLATITUDEChanging(value);
-                ReportPropertyChanging("LATITUDE");
-                _LATITUDE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LATITUDE");
-                OnLATITUDEChanged();
+                OnMfrIDChanging(value);
+                ReportPropertyChanging("MfrID");
+                _MfrID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MfrID");
+                OnMfrIDChanged();
             }
         }
-        private global::System.Decimal _LATITUDE;
-        partial void OnLATITUDEChanging(global::System.Decimal value);
-        partial void OnLATITUDEChanged();
+        private global::System.Int32 _MfrID;
+        partial void OnMfrIDChanging(global::System.Int32 value);
+        partial void OnMfrIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal LONGITUDE
+        public global::System.Int32 Year
         {
             get
             {
-                return _LONGITUDE;
+                return _Year;
             }
             set
             {
-                OnLONGITUDEChanging(value);
-                ReportPropertyChanging("LONGITUDE");
-                _LONGITUDE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LONGITUDE");
-                OnLONGITUDEChanged();
+                OnYearChanging(value);
+                ReportPropertyChanging("Year");
+                _Year = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Year");
+                OnYearChanged();
             }
         }
-        private global::System.Decimal _LONGITUDE;
-        partial void OnLONGITUDEChanging(global::System.Decimal value);
-        partial void OnLONGITUDEChanged();
+        private global::System.Int32 _Year;
+        partial void OnYearChanging(global::System.Int32 value);
+        partial void OnYearChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal Sales
+        {
+            get
+            {
+                return _Sales;
+            }
+            set
+            {
+                OnSalesChanging(value);
+                ReportPropertyChanging("Sales");
+                _Sales = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Sales");
+                OnSalesChanged();
+            }
+        }
+        private global::System.Decimal _Sales;
+        partial void OnSalesChanging(global::System.Decimal value);
+        partial void OnSalesChanged();
 
         #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="TBL_SEARCH_HISTORY")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class TBL_SEARCH_HISTORY : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new TBL_SEARCH_HISTORY object.
-        /// </summary>
-        /// <param name="sEARCH_ID">Initial value of the SEARCH_ID property.</param>
-        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
-        /// <param name="sEACH_TEXT">Initial value of the SEACH_TEXT property.</param>
-        /// <param name="rESULTS">Initial value of the RESULTS property.</param>
-        /// <param name="cREATED_DT">Initial value of the CREATED_DT property.</param>
-        public static TBL_SEARCH_HISTORY CreateTBL_SEARCH_HISTORY(global::System.Int32 sEARCH_ID, global::System.Int32 uSER_ID, global::System.String sEACH_TEXT, global::System.String rESULTS, global::System.DateTime cREATED_DT)
-        {
-            TBL_SEARCH_HISTORY tBL_SEARCH_HISTORY = new TBL_SEARCH_HISTORY();
-            tBL_SEARCH_HISTORY.SEARCH_ID = sEARCH_ID;
-            tBL_SEARCH_HISTORY.USER_ID = uSER_ID;
-            tBL_SEARCH_HISTORY.SEACH_TEXT = sEACH_TEXT;
-            tBL_SEARCH_HISTORY.RESULTS = rESULTS;
-            tBL_SEARCH_HISTORY.CREATED_DT = cREATED_DT;
-            return tBL_SEARCH_HISTORY;
-        }
 
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 SEARCH_ID
-        {
-            get
-            {
-                return _SEARCH_ID;
-            }
-            set
-            {
-                if (_SEARCH_ID != value)
-                {
-                    OnSEARCH_IDChanging(value);
-                    ReportPropertyChanging("SEARCH_ID");
-                    _SEARCH_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("SEARCH_ID");
-                    OnSEARCH_IDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _SEARCH_ID;
-        partial void OnSEARCH_IDChanging(global::System.Int32 value);
-        partial void OnSEARCH_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 USER_ID
-        {
-            get
-            {
-                return _USER_ID;
-            }
-            set
-            {
-                OnUSER_IDChanging(value);
-                ReportPropertyChanging("USER_ID");
-                _USER_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("USER_ID");
-                OnUSER_IDChanged();
-            }
-        }
-        private global::System.Int32 _USER_ID;
-        partial void OnUSER_IDChanging(global::System.Int32 value);
-        partial void OnUSER_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String SEACH_TEXT
-        {
-            get
-            {
-                return _SEACH_TEXT;
-            }
-            set
-            {
-                OnSEACH_TEXTChanging(value);
-                ReportPropertyChanging("SEACH_TEXT");
-                _SEACH_TEXT = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("SEACH_TEXT");
-                OnSEACH_TEXTChanged();
-            }
-        }
-        private global::System.String _SEACH_TEXT;
-        partial void OnSEACH_TEXTChanging(global::System.String value);
-        partial void OnSEACH_TEXTChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String RESULTS
-        {
-            get
-            {
-                return _RESULTS;
-            }
-            set
-            {
-                OnRESULTSChanging(value);
-                ReportPropertyChanging("RESULTS");
-                _RESULTS = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("RESULTS");
-                OnRESULTSChanged();
-            }
-        }
-        private global::System.String _RESULTS;
-        partial void OnRESULTSChanging(global::System.String value);
-        partial void OnRESULTSChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CREATED_DT
-        {
-            get
-            {
-                return _CREATED_DT;
-            }
-            set
-            {
-                OnCREATED_DTChanging(value);
-                ReportPropertyChanging("CREATED_DT");
-                _CREATED_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATED_DT");
-                OnCREATED_DTChanged();
-            }
-        }
-        private global::System.DateTime _CREATED_DT;
-        partial void OnCREATED_DTChanging(global::System.DateTime value);
-        partial void OnCREATED_DTChanged();
-
-        #endregion
     
         #region Navigation Properties
     
@@ -425,16 +423,16 @@ namespace SocialHeatMap.DataServices
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_SearchHistory_User", "TBL_USER")]
-        public TBL_USER TBL_USER
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_AnnualSales_Manufacturer", "Manufacturer")]
+        public Manufacturer Manufacturer
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_USER>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_USER").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "Manufacturer").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_USER>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_USER").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "Manufacturer").Value = value;
             }
         }
         /// <summary>
@@ -442,60 +440,62 @@ namespace SocialHeatMap.DataServices
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<TBL_USER> TBL_USERReference
+        public EntityReference<Manufacturer> ManufacturerReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<TBL_USER>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_USER");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "Manufacturer");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<TBL_USER>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_USER", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Manufacturer>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "Manufacturer", value);
                 }
             }
         }
 
         #endregion
+
     }
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="TBL_USER")]
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="Brand")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class TBL_USER : EntityObject
+    public partial class Brand : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new TBL_USER object.
+        /// Create a new Brand object.
         /// </summary>
-        /// <param name="uSER_ID">Initial value of the USER_ID property.</param>
-        /// <param name="fIRST_NAME">Initial value of the FIRST_NAME property.</param>
-        /// <param name="lAST_NAME">Initial value of the LAST_NAME property.</param>
-        /// <param name="sCREENNAME">Initial value of the SCREENNAME property.</param>
-        /// <param name="iS_ADMIN">Initial value of the IS_ADMIN property.</param>
-        /// <param name="cREATED_DT">Initial value of the CREATED_DT property.</param>
-        /// <param name="aCCESS_TOKEN">Initial value of the ACCESS_TOKEN property.</param>
-        /// <param name="aCCESS_TOKEN_SECRET">Initial value of the ACCESS_TOKEN_SECRET property.</param>
-        public static TBL_USER CreateTBL_USER(global::System.Int32 uSER_ID, global::System.String fIRST_NAME, global::System.String lAST_NAME, global::System.String sCREENNAME, global::System.Boolean iS_ADMIN, global::System.DateTime cREATED_DT, global::System.String aCCESS_TOKEN, global::System.String aCCESS_TOKEN_SECRET)
+        /// <param name="brandID">Initial value of the BrandID property.</param>
+        /// <param name="mfrID">Initial value of the MfrID property.</param>
+        /// <param name="typeID">Initial value of the TypeID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        /// <param name="startDate">Initial value of the StartDate property.</param>
+        /// <param name="alcohol">Initial value of the Alcohol property.</param>
+        /// <param name="calories">Initial value of the Calories property.</param>
+        public static Brand CreateBrand(global::System.Int32 brandID, global::System.Int32 mfrID, global::System.Int32 typeID, global::System.String name, global::System.String description, global::System.DateTime startDate, global::System.Decimal alcohol, global::System.Int32 calories)
         {
-            TBL_USER tBL_USER = new TBL_USER();
-            tBL_USER.USER_ID = uSER_ID;
-            tBL_USER.FIRST_NAME = fIRST_NAME;
-            tBL_USER.LAST_NAME = lAST_NAME;
-            tBL_USER.SCREENNAME = sCREENNAME;
-            tBL_USER.IS_ADMIN = iS_ADMIN;
-            tBL_USER.CREATED_DT = cREATED_DT;
-            tBL_USER.ACCESS_TOKEN = aCCESS_TOKEN;
-            tBL_USER.ACCESS_TOKEN_SECRET = aCCESS_TOKEN_SECRET;
-            return tBL_USER;
+            Brand brand = new Brand();
+            brand.BrandID = brandID;
+            brand.MfrID = mfrID;
+            brand.TypeID = typeID;
+            brand.Name = name;
+            brand.Description = description;
+            brand.StartDate = startDate;
+            brand.Alcohol = alcohol;
+            brand.Calories = calories;
+            return brand;
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -503,197 +503,198 @@ namespace SocialHeatMap.DataServices
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 USER_ID
+        public global::System.Int32 BrandID
         {
             get
             {
-                return _USER_ID;
+                return _BrandID;
             }
             set
             {
-                if (_USER_ID != value)
+                if (_BrandID != value)
                 {
-                    OnUSER_IDChanging(value);
-                    ReportPropertyChanging("USER_ID");
-                    _USER_ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("USER_ID");
-                    OnUSER_IDChanged();
+                    OnBrandIDChanging(value);
+                    ReportPropertyChanging("BrandID");
+                    _BrandID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BrandID");
+                    OnBrandIDChanged();
                 }
             }
         }
-        private global::System.Int32 _USER_ID;
-        partial void OnUSER_IDChanging(global::System.Int32 value);
-        partial void OnUSER_IDChanged();
+        private global::System.Int32 _BrandID;
+        partial void OnBrandIDChanging(global::System.Int32 value);
+        partial void OnBrandIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String FIRST_NAME
+        public global::System.Int32 MfrID
         {
             get
             {
-                return _FIRST_NAME;
+                return _MfrID;
             }
             set
             {
-                OnFIRST_NAMEChanging(value);
-                ReportPropertyChanging("FIRST_NAME");
-                _FIRST_NAME = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("FIRST_NAME");
-                OnFIRST_NAMEChanged();
+                OnMfrIDChanging(value);
+                ReportPropertyChanging("MfrID");
+                _MfrID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MfrID");
+                OnMfrIDChanged();
             }
         }
-        private global::System.String _FIRST_NAME;
-        partial void OnFIRST_NAMEChanging(global::System.String value);
-        partial void OnFIRST_NAMEChanged();
+        private global::System.Int32 _MfrID;
+        partial void OnMfrIDChanging(global::System.Int32 value);
+        partial void OnMfrIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String LAST_NAME
+        public global::System.Int32 TypeID
         {
             get
             {
-                return _LAST_NAME;
+                return _TypeID;
             }
             set
             {
-                OnLAST_NAMEChanging(value);
-                ReportPropertyChanging("LAST_NAME");
-                _LAST_NAME = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("LAST_NAME");
-                OnLAST_NAMEChanged();
+                OnTypeIDChanging(value);
+                ReportPropertyChanging("TypeID");
+                _TypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TypeID");
+                OnTypeIDChanged();
             }
         }
-        private global::System.String _LAST_NAME;
-        partial void OnLAST_NAMEChanging(global::System.String value);
-        partial void OnLAST_NAMEChanged();
+        private global::System.Int32 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int32 value);
+        partial void OnTypeIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String SCREENNAME
+        public global::System.String Name
         {
             get
             {
-                return _SCREENNAME;
+                return _Name;
             }
             set
             {
-                OnSCREENNAMEChanging(value);
-                ReportPropertyChanging("SCREENNAME");
-                _SCREENNAME = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("SCREENNAME");
-                OnSCREENNAMEChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _SCREENNAME;
-        partial void OnSCREENNAMEChanging(global::System.String value);
-        partial void OnSCREENNAMEChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean IS_ADMIN
+        public global::System.String Description
         {
             get
             {
-                return _IS_ADMIN;
+                return _Description;
             }
             set
             {
-                OnIS_ADMINChanging(value);
-                ReportPropertyChanging("IS_ADMIN");
-                _IS_ADMIN = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IS_ADMIN");
-                OnIS_ADMINChanged();
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
             }
         }
-        private global::System.Boolean _IS_ADMIN;
-        partial void OnIS_ADMINChanging(global::System.Boolean value);
-        partial void OnIS_ADMINChanged();
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime CREATED_DT
+        public global::System.DateTime StartDate
         {
             get
             {
-                return _CREATED_DT;
+                return _StartDate;
             }
             set
             {
-                OnCREATED_DTChanging(value);
-                ReportPropertyChanging("CREATED_DT");
-                _CREATED_DT = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CREATED_DT");
-                OnCREATED_DTChanged();
+                OnStartDateChanging(value);
+                ReportPropertyChanging("StartDate");
+                _StartDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartDate");
+                OnStartDateChanged();
             }
         }
-        private global::System.DateTime _CREATED_DT;
-        partial void OnCREATED_DTChanging(global::System.DateTime value);
-        partial void OnCREATED_DTChanged();
+        private global::System.DateTime _StartDate;
+        partial void OnStartDateChanging(global::System.DateTime value);
+        partial void OnStartDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ACCESS_TOKEN
+        public global::System.Decimal Alcohol
         {
             get
             {
-                return _ACCESS_TOKEN;
+                return _Alcohol;
             }
             set
             {
-                OnACCESS_TOKENChanging(value);
-                ReportPropertyChanging("ACCESS_TOKEN");
-                _ACCESS_TOKEN = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ACCESS_TOKEN");
-                OnACCESS_TOKENChanged();
+                OnAlcoholChanging(value);
+                ReportPropertyChanging("Alcohol");
+                _Alcohol = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Alcohol");
+                OnAlcoholChanged();
             }
         }
-        private global::System.String _ACCESS_TOKEN;
-        partial void OnACCESS_TOKENChanging(global::System.String value);
-        partial void OnACCESS_TOKENChanged();
+        private global::System.Decimal _Alcohol;
+        partial void OnAlcoholChanging(global::System.Decimal value);
+        partial void OnAlcoholChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ACCESS_TOKEN_SECRET
+        public global::System.Int32 Calories
         {
             get
             {
-                return _ACCESS_TOKEN_SECRET;
+                return _Calories;
             }
             set
             {
-                OnACCESS_TOKEN_SECRETChanging(value);
-                ReportPropertyChanging("ACCESS_TOKEN_SECRET");
-                _ACCESS_TOKEN_SECRET = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ACCESS_TOKEN_SECRET");
-                OnACCESS_TOKEN_SECRETChanged();
+                OnCaloriesChanging(value);
+                ReportPropertyChanging("Calories");
+                _Calories = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Calories");
+                OnCaloriesChanged();
             }
         }
-        private global::System.String _ACCESS_TOKEN_SECRET;
-        partial void OnACCESS_TOKEN_SECRETChanging(global::System.String value);
-        partial void OnACCESS_TOKEN_SECRETChanged();
+        private global::System.Int32 _Calories;
+        partial void OnCaloriesChanging(global::System.Int32 value);
+        partial void OnCaloriesChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -703,25 +704,1551 @@ namespace SocialHeatMap.DataServices
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_SearchHistory_User", "TBL_SEARCH_HISTORY")]
-        public EntityCollection<TBL_SEARCH_HISTORY> TBL_SEARCH_HISTORY
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brand_Manufacturer", "Manufacturer")]
+        public Manufacturer Manufacturer
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<TBL_SEARCH_HISTORY>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_SEARCH_HISTORY");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brand_Manufacturer", "Manufacturer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brand_Manufacturer", "Manufacturer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Manufacturer> ManufacturerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brand_Manufacturer", "Manufacturer");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<TBL_SEARCH_HISTORY>("SocialHeatMapModel.FK_SearchHistory_User", "TBL_SEARCH_HISTORY", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brand_Manufacturer", "Manufacturer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brand_Type", "Type")]
+        public Type Type
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Type>("SocialHeatMapModel.FK_Brand_Type", "Type").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Type>("SocialHeatMapModel.FK_Brand_Type", "Type").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Type> TypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Type>("SocialHeatMapModel.FK_Brand_Type", "Type");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Type>("SocialHeatMapModel.FK_Brand_Type", "Type", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Ranking_Band", "Ranking")]
+        public EntityCollection<Ranking> Rankings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Ranking>("SocialHeatMapModel.FK_Ranking_Band", "Ranking");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Ranking>("SocialHeatMapModel.FK_Ranking_Band", "Ranking", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_SocialMediaInfo_Brand", "SocialMediaInfo")]
+        public EntityCollection<SocialMediaInfo> SocialMediaInfoes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SocialMediaInfo>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "SocialMediaInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SocialMediaInfo>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "SocialMediaInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "BrewedAt", "Brewery")]
+        public EntityCollection<Brewery> Breweries
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brewery>("SocialHeatMapModel.BrewedAt", "Brewery");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brewery>("SocialHeatMapModel.BrewedAt", "Brewery", value);
                 }
             }
         }
 
         #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="Brewery")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Brewery : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Brewery object.
+        /// </summary>
+        /// <param name="breweryID">Initial value of the BreweryID property.</param>
+        /// <param name="mfrID">Initial value of the MfrID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="opened">Initial value of the Opened property.</param>
+        /// <param name="city">Initial value of the City property.</param>
+        /// <param name="state">Initial value of the State property.</param>
+        /// <param name="country">Initial value of the Country property.</param>
+        public static Brewery CreateBrewery(global::System.Int32 breweryID, global::System.Int32 mfrID, global::System.Int32 name, global::System.DateTime opened, global::System.String city, global::System.String state, global::System.String country)
+        {
+            Brewery brewery = new Brewery();
+            brewery.BreweryID = breweryID;
+            brewery.MfrID = mfrID;
+            brewery.Name = name;
+            brewery.Opened = opened;
+            brewery.City = city;
+            brewery.State = state;
+            brewery.Country = country;
+            return brewery;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BreweryID
+        {
+            get
+            {
+                return _BreweryID;
+            }
+            set
+            {
+                if (_BreweryID != value)
+                {
+                    OnBreweryIDChanging(value);
+                    ReportPropertyChanging("BreweryID");
+                    _BreweryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("BreweryID");
+                    OnBreweryIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _BreweryID;
+        partial void OnBreweryIDChanging(global::System.Int32 value);
+        partial void OnBreweryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MfrID
+        {
+            get
+            {
+                return _MfrID;
+            }
+            set
+            {
+                OnMfrIDChanging(value);
+                ReportPropertyChanging("MfrID");
+                _MfrID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MfrID");
+                OnMfrIDChanged();
+            }
+        }
+        private global::System.Int32 _MfrID;
+        partial void OnMfrIDChanging(global::System.Int32 value);
+        partial void OnMfrIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.Int32 _Name;
+        partial void OnNameChanging(global::System.Int32 value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Opened
+        {
+            get
+            {
+                return _Opened;
+            }
+            set
+            {
+                OnOpenedChanging(value);
+                ReportPropertyChanging("Opened");
+                _Opened = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Opened");
+                OnOpenedChanged();
+            }
+        }
+        private global::System.DateTime _Opened;
+        partial void OnOpenedChanging(global::System.DateTime value);
+        partial void OnOpenedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String City
+        {
+            get
+            {
+                return _City;
+            }
+            set
+            {
+                OnCityChanging(value);
+                ReportPropertyChanging("City");
+                _City = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("City");
+                OnCityChanged();
+            }
+        }
+        private global::System.String _City;
+        partial void OnCityChanging(global::System.String value);
+        partial void OnCityChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private global::System.String _State;
+        partial void OnStateChanging(global::System.String value);
+        partial void OnStateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Country
+        {
+            get
+            {
+                return _Country;
+            }
+            set
+            {
+                OnCountryChanging(value);
+                ReportPropertyChanging("Country");
+                _Country = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Country");
+                OnCountryChanged();
+            }
+        }
+        private global::System.String _Country;
+        partial void OnCountryChanging(global::System.String value);
+        partial void OnCountryChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brewery_Manufacturer", "Manufacturer")]
+        public Manufacturer Manufacturer
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Manufacturer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Manufacturer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Manufacturer> ManufacturerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Manufacturer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Manufacturer>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Manufacturer", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "BrewedAt", "Brand")]
+        public EntityCollection<Brand> Brands
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brand>("SocialHeatMapModel.BrewedAt", "Brand");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brand>("SocialHeatMapModel.BrewedAt", "Brand", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="Manufacturer")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Manufacturer : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Manufacturer object.
+        /// </summary>
+        /// <param name="mfrID">Initial value of the MfrID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="country">Initial value of the Country property.</param>
+        /// <param name="capacity">Initial value of the Capacity property.</param>
+        /// <param name="city">Initial value of the City property.</param>
+        /// <param name="state">Initial value of the State property.</param>
+        public static Manufacturer CreateManufacturer(global::System.Int32 mfrID, global::System.String name, global::System.String country, global::System.Int32 capacity, global::System.String city, global::System.String state)
+        {
+            Manufacturer manufacturer = new Manufacturer();
+            manufacturer.MfrID = mfrID;
+            manufacturer.Name = name;
+            manufacturer.Country = country;
+            manufacturer.Capacity = capacity;
+            manufacturer.City = city;
+            manufacturer.State = state;
+            return manufacturer;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MfrID
+        {
+            get
+            {
+                return _MfrID;
+            }
+            set
+            {
+                if (_MfrID != value)
+                {
+                    OnMfrIDChanging(value);
+                    ReportPropertyChanging("MfrID");
+                    _MfrID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MfrID");
+                    OnMfrIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _MfrID;
+        partial void OnMfrIDChanging(global::System.Int32 value);
+        partial void OnMfrIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Country
+        {
+            get
+            {
+                return _Country;
+            }
+            set
+            {
+                OnCountryChanging(value);
+                ReportPropertyChanging("Country");
+                _Country = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Country");
+                OnCountryChanged();
+            }
+        }
+        private global::System.String _Country;
+        partial void OnCountryChanging(global::System.String value);
+        partial void OnCountryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Capacity
+        {
+            get
+            {
+                return _Capacity;
+            }
+            set
+            {
+                OnCapacityChanging(value);
+                ReportPropertyChanging("Capacity");
+                _Capacity = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Capacity");
+                OnCapacityChanged();
+            }
+        }
+        private global::System.Int32 _Capacity;
+        partial void OnCapacityChanging(global::System.Int32 value);
+        partial void OnCapacityChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String City
+        {
+            get
+            {
+                return _City;
+            }
+            set
+            {
+                OnCityChanging(value);
+                ReportPropertyChanging("City");
+                _City = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("City");
+                OnCityChanged();
+            }
+        }
+        private global::System.String _City;
+        partial void OnCityChanging(global::System.String value);
+        partial void OnCityChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String State
+        {
+            get
+            {
+                return _State;
+            }
+            set
+            {
+                OnStateChanging(value);
+                ReportPropertyChanging("State");
+                _State = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("State");
+                OnStateChanged();
+            }
+        }
+        private global::System.String _State;
+        partial void OnStateChanging(global::System.String value);
+        partial void OnStateChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_AnnualSales_Manufacturer", "AnnualSale")]
+        public EntityCollection<AnnualSale> AnnualSales
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AnnualSale>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "AnnualSale");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AnnualSale>("SocialHeatMapModel.FK_AnnualSales_Manufacturer", "AnnualSale", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brand_Manufacturer", "Brand")]
+        public EntityCollection<Brand> Brands
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brand>("SocialHeatMapModel.FK_Brand_Manufacturer", "Brand");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brand>("SocialHeatMapModel.FK_Brand_Manufacturer", "Brand", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brewery_Manufacturer", "Brewery")]
+        public EntityCollection<Brewery> Breweries
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brewery>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Brewery");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brewery>("SocialHeatMapModel.FK_Brewery_Manufacturer", "Brewery", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="Ranking")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Ranking : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Ranking object.
+        /// </summary>
+        /// <param name="rankingID">Initial value of the RankingID property.</param>
+        /// <param name="userID">Initial value of the UserID property.</param>
+        /// <param name="brandID">Initial value of the BrandID property.</param>
+        /// <param name="score">Initial value of the Score property.</param>
+        public static Ranking CreateRanking(global::System.Int32 rankingID, global::System.Int32 userID, global::System.Int32 brandID, global::System.Int32 score)
+        {
+            Ranking ranking = new Ranking();
+            ranking.RankingID = rankingID;
+            ranking.UserID = userID;
+            ranking.BrandID = brandID;
+            ranking.Score = score;
+            return ranking;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RankingID
+        {
+            get
+            {
+                return _RankingID;
+            }
+            set
+            {
+                if (_RankingID != value)
+                {
+                    OnRankingIDChanging(value);
+                    ReportPropertyChanging("RankingID");
+                    _RankingID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RankingID");
+                    OnRankingIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _RankingID;
+        partial void OnRankingIDChanging(global::System.Int32 value);
+        partial void OnRankingIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserID
+        {
+            get
+            {
+                return _UserID;
+            }
+            set
+            {
+                OnUserIDChanging(value);
+                ReportPropertyChanging("UserID");
+                _UserID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserID");
+                OnUserIDChanged();
+            }
+        }
+        private global::System.Int32 _UserID;
+        partial void OnUserIDChanging(global::System.Int32 value);
+        partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BrandID
+        {
+            get
+            {
+                return _BrandID;
+            }
+            set
+            {
+                OnBrandIDChanging(value);
+                ReportPropertyChanging("BrandID");
+                _BrandID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BrandID");
+                OnBrandIDChanged();
+            }
+        }
+        private global::System.Int32 _BrandID;
+        partial void OnBrandIDChanging(global::System.Int32 value);
+        partial void OnBrandIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Score
+        {
+            get
+            {
+                return _Score;
+            }
+            set
+            {
+                OnScoreChanging(value);
+                ReportPropertyChanging("Score");
+                _Score = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Score");
+                OnScoreChanged();
+            }
+        }
+        private global::System.Int32 _Score;
+        partial void OnScoreChanging(global::System.Int32 value);
+        partial void OnScoreChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Ranking_Band", "Brand")]
+        public Brand Brand
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_Ranking_Band", "Brand").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_Ranking_Band", "Brand").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Brand> BrandReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_Ranking_Band", "Brand");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Brand>("SocialHeatMapModel.FK_Ranking_Band", "Brand", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Ranking_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SocialHeatMapModel.FK_Ranking_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SocialHeatMapModel.FK_Ranking_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SocialHeatMapModel.FK_Ranking_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SocialHeatMapModel.FK_Ranking_User", "User", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="SocialMediaInfo")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SocialMediaInfo : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SocialMediaInfo object.
+        /// </summary>
+        /// <param name="socialMediaInfoID">Initial value of the SocialMediaInfoID property.</param>
+        /// <param name="brandID">Initial value of the BrandID property.</param>
+        /// <param name="information">Initial value of the Information property.</param>
+        /// <param name="latitude">Initial value of the Latitude property.</param>
+        /// <param name="longitude">Initial value of the Longitude property.</param>
+        /// <param name="searchDate">Initial value of the SearchDate property.</param>
+        public static SocialMediaInfo CreateSocialMediaInfo(global::System.Int32 socialMediaInfoID, global::System.Int32 brandID, global::System.String information, global::System.Double latitude, global::System.Double longitude, global::System.DateTime searchDate)
+        {
+            SocialMediaInfo socialMediaInfo = new SocialMediaInfo();
+            socialMediaInfo.SocialMediaInfoID = socialMediaInfoID;
+            socialMediaInfo.BrandID = brandID;
+            socialMediaInfo.Information = information;
+            socialMediaInfo.Latitude = latitude;
+            socialMediaInfo.Longitude = longitude;
+            socialMediaInfo.SearchDate = searchDate;
+            return socialMediaInfo;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SocialMediaInfoID
+        {
+            get
+            {
+                return _SocialMediaInfoID;
+            }
+            set
+            {
+                if (_SocialMediaInfoID != value)
+                {
+                    OnSocialMediaInfoIDChanging(value);
+                    ReportPropertyChanging("SocialMediaInfoID");
+                    _SocialMediaInfoID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SocialMediaInfoID");
+                    OnSocialMediaInfoIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SocialMediaInfoID;
+        partial void OnSocialMediaInfoIDChanging(global::System.Int32 value);
+        partial void OnSocialMediaInfoIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BrandID
+        {
+            get
+            {
+                return _BrandID;
+            }
+            set
+            {
+                OnBrandIDChanging(value);
+                ReportPropertyChanging("BrandID");
+                _BrandID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BrandID");
+                OnBrandIDChanged();
+            }
+        }
+        private global::System.Int32 _BrandID;
+        partial void OnBrandIDChanging(global::System.Int32 value);
+        partial void OnBrandIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Information
+        {
+            get
+            {
+                return _Information;
+            }
+            set
+            {
+                OnInformationChanging(value);
+                ReportPropertyChanging("Information");
+                _Information = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Information");
+                OnInformationChanged();
+            }
+        }
+        private global::System.String _Information;
+        partial void OnInformationChanging(global::System.String value);
+        partial void OnInformationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Double Latitude
+        {
+            get
+            {
+                return _Latitude;
+            }
+            set
+            {
+                OnLatitudeChanging(value);
+                ReportPropertyChanging("Latitude");
+                _Latitude = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Latitude");
+                OnLatitudeChanged();
+            }
+        }
+        private global::System.Double _Latitude;
+        partial void OnLatitudeChanging(global::System.Double value);
+        partial void OnLatitudeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Double Longitude
+        {
+            get
+            {
+                return _Longitude;
+            }
+            set
+            {
+                OnLongitudeChanging(value);
+                ReportPropertyChanging("Longitude");
+                _Longitude = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Longitude");
+                OnLongitudeChanged();
+            }
+        }
+        private global::System.Double _Longitude;
+        partial void OnLongitudeChanging(global::System.Double value);
+        partial void OnLongitudeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SearchDate
+        {
+            get
+            {
+                return _SearchDate;
+            }
+            set
+            {
+                OnSearchDateChanging(value);
+                ReportPropertyChanging("SearchDate");
+                _SearchDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchDate");
+                OnSearchDateChanged();
+            }
+        }
+        private global::System.DateTime _SearchDate;
+        partial void OnSearchDateChanging(global::System.DateTime value);
+        partial void OnSearchDateChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_SocialMediaInfo_Brand", "Brand")]
+        public Brand Brand
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "Brand").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "Brand").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Brand> BrandReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Brand>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "Brand");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Brand>("SocialHeatMapModel.FK_SocialMediaInfo_Brand", "Brand", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="Type")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Type : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Type object.
+        /// </summary>
+        /// <param name="typeID">Initial value of the TypeID property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
+        public static Type CreateType(global::System.Int32 typeID, global::System.String name, global::System.String description)
+        {
+            Type type = new Type();
+            type.TypeID = typeID;
+            type.Name = name;
+            type.Description = description;
+            return type;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeID
+        {
+            get
+            {
+                return _TypeID;
+            }
+            set
+            {
+                if (_TypeID != value)
+                {
+                    OnTypeIDChanging(value);
+                    ReportPropertyChanging("TypeID");
+                    _TypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TypeID");
+                    OnTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int32 value);
+        partial void OnTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Brand_Type", "Brand")]
+        public EntityCollection<Brand> Brands
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Brand>("SocialHeatMapModel.FK_Brand_Type", "Brand");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Brand>("SocialHeatMapModel.FK_Brand_Type", "Brand", value);
+                }
+            }
+        }
+
+        #endregion
+
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SocialHeatMapModel", Name="User")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class User : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new User object.
+        /// </summary>
+        /// <param name="userID">Initial value of the UserID property.</param>
+        /// <param name="firstName">Initial value of the FirstName property.</param>
+        /// <param name="lastName">Initial value of the LastName property.</param>
+        /// <param name="screenName">Initial value of the ScreenName property.</param>
+        /// <param name="accessToken">Initial value of the AccessToken property.</param>
+        /// <param name="accessTokenSecret">Initial value of the AccessTokenSecret property.</param>
+        /// <param name="isAdmin">Initial value of the IsAdmin property.</param>
+        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
+        /// <param name="isSubscribed">Initial value of the IsSubscribed property.</param>
+        public static User CreateUser(global::System.Int32 userID, global::System.String firstName, global::System.String lastName, global::System.String screenName, global::System.String accessToken, global::System.String accessTokenSecret, global::System.Boolean isAdmin, global::System.DateTime createdOn, global::System.Boolean isSubscribed)
+        {
+            User user = new User();
+            user.UserID = userID;
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.ScreenName = screenName;
+            user.AccessToken = accessToken;
+            user.AccessTokenSecret = accessTokenSecret;
+            user.IsAdmin = isAdmin;
+            user.CreatedOn = createdOn;
+            user.IsSubscribed = isSubscribed;
+            return user;
+        }
+
+        #endregion
+
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserID
+        {
+            get
+            {
+                return _UserID;
+            }
+            set
+            {
+                if (_UserID != value)
+                {
+                    OnUserIDChanging(value);
+                    ReportPropertyChanging("UserID");
+                    _UserID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UserID");
+                    OnUserIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _UserID;
+        partial void OnUserIDChanging(global::System.Int32 value);
+        partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FirstName
+        {
+            get
+            {
+                return _FirstName;
+            }
+            set
+            {
+                OnFirstNameChanging(value);
+                ReportPropertyChanging("FirstName");
+                _FirstName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FirstName");
+                OnFirstNameChanged();
+            }
+        }
+        private global::System.String _FirstName;
+        partial void OnFirstNameChanging(global::System.String value);
+        partial void OnFirstNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String LastName
+        {
+            get
+            {
+                return _LastName;
+            }
+            set
+            {
+                OnLastNameChanging(value);
+                ReportPropertyChanging("LastName");
+                _LastName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("LastName");
+                OnLastNameChanged();
+            }
+        }
+        private global::System.String _LastName;
+        partial void OnLastNameChanging(global::System.String value);
+        partial void OnLastNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ScreenName
+        {
+            get
+            {
+                return _ScreenName;
+            }
+            set
+            {
+                OnScreenNameChanging(value);
+                ReportPropertyChanging("ScreenName");
+                _ScreenName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ScreenName");
+                OnScreenNameChanged();
+            }
+        }
+        private global::System.String _ScreenName;
+        partial void OnScreenNameChanging(global::System.String value);
+        partial void OnScreenNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AccessToken
+        {
+            get
+            {
+                return _AccessToken;
+            }
+            set
+            {
+                OnAccessTokenChanging(value);
+                ReportPropertyChanging("AccessToken");
+                _AccessToken = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("AccessToken");
+                OnAccessTokenChanged();
+            }
+        }
+        private global::System.String _AccessToken;
+        partial void OnAccessTokenChanging(global::System.String value);
+        partial void OnAccessTokenChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String AccessTokenSecret
+        {
+            get
+            {
+                return _AccessTokenSecret;
+            }
+            set
+            {
+                OnAccessTokenSecretChanging(value);
+                ReportPropertyChanging("AccessTokenSecret");
+                _AccessTokenSecret = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("AccessTokenSecret");
+                OnAccessTokenSecretChanged();
+            }
+        }
+        private global::System.String _AccessTokenSecret;
+        partial void OnAccessTokenSecretChanging(global::System.String value);
+        partial void OnAccessTokenSecretChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsAdmin
+        {
+            get
+            {
+                return _IsAdmin;
+            }
+            set
+            {
+                OnIsAdminChanging(value);
+                ReportPropertyChanging("IsAdmin");
+                _IsAdmin = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAdmin");
+                OnIsAdminChanged();
+            }
+        }
+        private global::System.Boolean _IsAdmin;
+        partial void OnIsAdminChanging(global::System.Boolean value);
+        partial void OnIsAdminChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsSubscribed
+        {
+            get
+            {
+                return _IsSubscribed;
+            }
+            set
+            {
+                OnIsSubscribedChanging(value);
+                ReportPropertyChanging("IsSubscribed");
+                _IsSubscribed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSubscribed");
+                OnIsSubscribedChanged();
+            }
+        }
+        private global::System.Boolean _IsSubscribed;
+        partial void OnIsSubscribedChanging(global::System.Boolean value);
+        partial void OnIsSubscribedChanged();
+
+        #endregion
+
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SocialHeatMapModel", "FK_Ranking_User", "Ranking")]
+        public EntityCollection<Ranking> Rankings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Ranking>("SocialHeatMapModel.FK_Ranking_User", "Ranking");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Ranking>("SocialHeatMapModel.FK_Ranking_User", "Ranking", value);
+                }
+            }
+        }
+
+        #endregion
+
     }
 
     #endregion
+
     
 }

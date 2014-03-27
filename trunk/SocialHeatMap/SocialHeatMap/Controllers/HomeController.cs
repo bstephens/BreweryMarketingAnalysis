@@ -21,9 +21,8 @@ namespace SocialHeatMap.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm, [Bind(Prefix="")]HomeModel model)
         {
-            HomeModel model = new HomeModel(UserInfo.CurrentUsername);
             TwitterService service = UserInfo.TwitterService;
 
             if (service != null)
@@ -58,8 +57,11 @@ namespace SocialHeatMap.Controllers
                     item.Location = new TwitterGeoLocation((double)allCoords[r].LATITUDE, (double)allCoords[r].LONGITUDE);
                 }*/
 
+                foreach (TwitterStatus item in model.Tweets.Where(x => x.Location != null))
+                    CoordinateDataService.SaveTweet(model.SelectedBrandId, item.TextAsHtml, item.Location.Coordinates.Latitude, item.Location.Coordinates.Longitude);
+
                 string strJson = JsonConvert.SerializeObject(model.Tweets);
-                AdminDataService.SaveSearchResults(UserInfo.CurrentUsername, searchTerm, strJson);
+                //AdminDataService.SaveSearchResults(UserInfo.CurrentUsername, searchTerm, strJson);
             }
             model.Load();
 

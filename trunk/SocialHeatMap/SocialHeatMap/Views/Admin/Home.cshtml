@@ -64,14 +64,14 @@
         </tr>
     </tfoot>
     <tbody>
-        @foreach (TBL_SEARCH_HISTORY item in Model.Searches)
+        @*foreach (TBL_SEARCH_HISTORY item in Model.Searches)
         {
             <tr>
                 <td>@item.SEACH_TEXT</td>
                 <td>@item.CREATED_DT</td>
                 <td>@item.TBL_USER.SCREENNAME</td>
             </tr>
-        }
+        }*@
     </tbody>
 </table>
 
@@ -108,9 +108,9 @@
     <tbody>
         @foreach (UserEntity item in Model.Users)
         {
-            int numberSearches = (from a in Model.Searches
-                                  where a.USER_ID == item.UserId
-                                  select a.SEARCH_ID).Count();
+            int numberSearches = 0;/* (from a in Model.Searches
+                                     where a.USER_ID == item.UserId
+                                     select a.SEARCH_ID).Count();*/
             <tr>
                 <td>@item.ScreenName</td>
                 <td>@numberSearches</td>
