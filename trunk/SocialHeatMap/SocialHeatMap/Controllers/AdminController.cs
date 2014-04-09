@@ -49,5 +49,19 @@ namespace SocialHeatMap.Controllers
 
             return RedirectToAction("Home", "Admin");
         }
+
+        public ActionResult MakeSubscriber(int id)
+        {
+            AdminDataService.UpdateSubscriberStatus(id, true);
+
+            return RedirectToAction("Home", "Admin");
+        }
+
+        public ActionResult RemoveSubscriber(int id)
+        {
+            AdminDataService.UpdateSubscriberStatus(id, false);
+
+            return RedirectToAction("Home", "Admin");
+        }
     }
 }

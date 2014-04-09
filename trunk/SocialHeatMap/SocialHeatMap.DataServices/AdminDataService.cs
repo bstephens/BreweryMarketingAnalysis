@@ -89,5 +89,19 @@ namespace SocialHeatMap.DataServices
                 context.SaveChanges();
             }
         }
+
+        public static void UpdateSubscriberStatus(int userId, bool isSubscriber)
+        {
+            using (SocialHeatMapEntities context = new SocialHeatMapEntities())
+            {
+                User dbUser = (from a in context.Users
+                               where a.UserID == userId
+                               select a).First();
+
+                dbUser.IsSubscribed = isSubscriber;
+
+                context.SaveChanges();
+            }
+        }
     }
 }

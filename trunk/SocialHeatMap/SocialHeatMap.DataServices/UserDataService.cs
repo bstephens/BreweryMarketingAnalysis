@@ -45,6 +45,7 @@ namespace SocialHeatMap.DataServices
                               Name = a.FirstName,
                               ScreenName = a.ScreenName,
                               IsAdmin = a.IsAdmin,
+                              IsSubscribed = a.IsSubscribed,
                               AccessToken = a.AccessToken,
                               AccessTokenSecret = a.AccessTokenSecret,
                               CreatedDt = a.CreatedOn
@@ -68,6 +69,7 @@ namespace SocialHeatMap.DataServices
                               Name = a.FirstName,
                               ScreenName = a.ScreenName,
                               IsAdmin = a.IsAdmin,
+                              IsSubscribed = a.IsSubscribed,
                               AccessToken = a.AccessToken,
                               AccessTokenSecret = a.AccessTokenSecret,
                               CreatedDt = a.CreatedOn
@@ -90,6 +92,7 @@ namespace SocialHeatMap.DataServices
                               Name = a.FirstName,
                               ScreenName = a.ScreenName,
                               IsAdmin = a.IsAdmin,
+                              IsSubscribed = a.IsSubscribed,
                               AccessToken = a.AccessToken,
                               AccessTokenSecret = a.AccessTokenSecret,
                               CreatedDt = a.CreatedOn

@@ -1,0 +1,140 @@
+﻿@model SearchModel
+@{
+    ViewBag.Title = "Social HeatMap";
+}
+
+@section ScriptContent { 
+    @if (Model.SearchResults.Count > 0)
+    {
+        string dataString = "";
+        foreach (SearchResultEntity item in Model.SearchResults)
+        {
+            dataString += "new google.maps.LatLng(" + item.Latitude + ", " + item.Longitude + "),";
+        }
+        //remove last comma
+        dataString = dataString.Substring(0, dataString.Length - 1);
+        
+        <script type="text/javascript">
+        $(document).ready(function () {
+            var heatMapData = [ @dataString ];
+
+            var sanFrancisco = new google.maps.LatLng(37.774546, -90.433523);
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), {
+                center: sanFrancisco,
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatMapData,
+                radius: 13
+            });
+        
+            heatmap.setMap(map);
+
+            $("#resultsTbl").tablesorter({widgets: ['zebra']}).tablesorterPager(
+                {
+                    container: $(".pager"),
+                    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
+                    fixedHeight: true,
+                    removeRows: false,
+                    cssGoto: '.gotoPage'
+                });
+        });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+        $(document).ready(function () {
+            var sanFrancisco = new google.maps.LatLng(37.774546, -90.433523);
+
+            map = new google.maps.Map(document.getElementById('map-canvas'), {
+                center: sanFrancisco,
+                zoom: 4,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        });
+        </script>
+    }
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("SearchData", "Home", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td>Manufacturer</td><td>@Html.DropDownListFor(x => x.Filters.SelectedManufacturerId, Model.Manufacturers,"")</td>
+                <td>@Html.TextBoxFor(x=>x.Filters.MinABV)</td><td align="center">&le; ABV &le;</td><td>@Html.TextBoxFor(x=>x.Filters.MaxABV)</td>            
+            </tr>
+            <tr>
+                <td>Brand</td><td>@Html.DropDownListFor(x => x.Filters.SelectedBrandId, Model.Brands, "")</td>
+                <td>@Html.TextBoxFor(x=>x.Filters.MinBarrels)</td><td align="center">&le; Barrels &le;</td><td>@Html.TextBoxFor(x=>x.Filters.MaxBarrels)</td>            
+            </tr>
+            <tr>
+                <td>Type</td><td>@Html.DropDownListFor(x => x.Filters.SelectedTypeId, Model.Types, "")</td>
+                <td>@Html.TextBoxFor(x=>x.Filters.MinCalories)</td><td align="center">&le; Calories &le;</td><td>@Html.TextBoxFor(x=>x.Filters.MaxCalories)</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <td>@Html.TextBoxFor(x=>x.Filters.MinSales)</td><td align="center">&le; Sales &le;</td><td>@Html.TextBoxFor(x=>x.Filters.MaxSales)</td>
+            </tr>
+        </table>
+    <input type="submit" value="Search" />
+    }
+}
+else
+{
+    @:Please @Html.ActionLink("log on", "LogOn", "Account") to search tweets.
+}
+<br /><br />
+<div id="map-canvas" style="width: 100%; height: 600px"></div>
+<br /><br />
+@if (Model.SearchResults.Count > 0)
+{ 
+    
+    <div>@Model.SearchResults.Count tweets returned</div>
+    
+    <table id="resultsTbl" class="tablesorter tablesorter-blue">
+        <thead>
+            <tr>
+                <th>Manufacturer</th>
+                <th>Brand</th>
+                <th>Tweet Text</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tfoot>            
+            <tr>
+                <td class="pager" colspan="4">
+                    Page: <select class="gotoPage"></select>
+                    <img src="/content/images/first.png" class="first"/>
+                    <img src="/content/images/prev.png" class="prev"/>
+                    <span class="pagedisplay"></span>
+                    <img src="/content/images/next.png" class="next"/>
+                    <img src="/content/images/last.png" class="last"/>
+                    <select class="pagesize">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                    </select>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            @foreach (SearchResultEntity item in Model.SearchResults)
+            {
+                <tr>
+                    <td>@item.Manufacturer</td>
+                    <td>@item.Brand</td>
+                    <td>@Html.Raw(item.Text)</td>
+                    <td>@item.SearchDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+            
+    </table>
+}

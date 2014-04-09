@@ -7,15 +7,6 @@
 @section ScriptContent{
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#tblSearches").tablesorter({ widgets: ['zebra'] })
-                         .tablesorterPager({
-                             container: $("#tblSpage"),
-                             output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
-                             fixedHeight: true,
-                             removeRows: false,
-                             cssGoto: '.gotoPage'
-                         });
-
             $("#tblUsers").tablesorter({ widgets: ['zebra'] })
                         .tablesorterPager({
                             container: $("#tblUpage"),
@@ -31,50 +22,6 @@
 
 <h2>Administration</h2>
 
-<p>There @(Model.NumberSearches == 1 ? "has been " + Model.NumberSearches + " search" : "have been " + Model.NumberSearches + " searches") made by @Model.NumberUsers @(Model.NumberUsers == 1 ? "user" : "users").</p>
-
-
-<div style="float:left"><h3>Searches</h3></div>
-<div style="float:right;padding-top:18px;">@Html.ActionLink("Clear Saved Searches", "ClearSearches", "Admin")</div>
-
-<table id="tblSearches" class="tablesorter tablesorter-blue">
-    <thead>
-        <tr>
-            <th>Terms</th>
-            <th>Date</th>
-            <th>User</th>
-        </tr>
-    </thead>
-    <tfoot>            
-        <tr>
-            <td id="tblSpage" class="pager" colspan="3">
-                Page: <select class="gotoPage"></select>
-                <img src="/content/images/first.png" class="first"/>
-                <img src="/content/images/prev.png" class="prev"/>
-                <span class="pagedisplay"></span>
-                <img src="/content/images/next.png" class="next"/>
-                <img src="/content/images/last.png" class="last"/>
-                <select class="pagesize">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                </select>
-            </td>
-        </tr>
-    </tfoot>
-    <tbody>
-        @*foreach (TBL_SEARCH_HISTORY item in Model.Searches)
-        {
-            <tr>
-                <td>@item.SEACH_TEXT</td>
-                <td>@item.CREATED_DT</td>
-                <td>@item.TBL_USER.SCREENNAME</td>
-            </tr>
-        }*@
-    </tbody>
-</table>
-
 <div style="float:left"><h3>Users</h3></div>
 <div style="float:right;padding-top:18px;">@Html.ActionLink("Clear User Credentials", "ClearCredentials", "Admin")</div>
  
@@ -84,12 +31,13 @@
             <th>Name</th>
             <th>Number of Searches</th>
             <th>Administrator</th>
+            <th>Subscriber</th>
             <th>Created Date</th>
         </tr>
     </thead>
     <tfoot>            
         <tr>
-            <td id="tblUpage" class="pager" colspan="4">
+            <td id="tblUpage" class="pager" colspan="5">
                 Page: <select class="gotoPage"></select>
                 <img src="/content/images/first.png" class="first"/>
                 <img src="/content/images/prev.png" class="prev"/>
@@ -122,6 +70,16 @@
                     else
                     { 
                         @:No @Html.ActionLink("(Make Admin)", "MakeAdmin", "Admin", new { @id = @item.UserId }, null)
+                    }
+                </td>
+                <td>
+                    @if (item.IsSubscribed)
+                    {
+                        @:Yes @Html.ActionLink("(Remove)", "RemoveSubscriber", "Admin", new { @id = @item.UserId }, null)
+                    }
+                    else
+                    { 
+                        @:No @Html.ActionLink("(Make Subscriber)", "MakeSubscriber", "Admin", new { @id = @item.UserId }, null)
                     }
                 </td>
                 <td>@item.CreatedDt.ToShortDateString()</td>

@@ -51,7 +51,15 @@ namespace SocialHeatMap.Controllers
 
             UserEntity dbUser = UserDataService.SaveUser(user.ScreenName, user.Name, accessToken.Token, accessToken.TokenSecret);
 
-            string roles = dbUser.IsAdmin ? "Admin,Member" : "Member";
+            List<string> dbRoles = new List<string>();
+            dbRoles.Add("Member");
+
+            if (dbUser.IsAdmin)
+                dbRoles.Add("Admin");
+            if (dbUser.IsSubscribed)
+                dbRoles.Add("Subscriber");
+
+            string roles = string.Join(",", dbRoles);
 
             FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
               1,

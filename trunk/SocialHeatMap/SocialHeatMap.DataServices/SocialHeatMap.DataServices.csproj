@@ -46,6 +46,8 @@
     <Compile Include="CoordinateDataService.cs" />
     <Compile Include="AdminDataService.cs" />
     <Compile Include="BeerDataService.cs" />
+    <Compile Include="DataEntities\FilterEntity.cs" />
+    <Compile Include="DataEntities\SearchResultEntity.cs" />
     <Compile Include="DataEntities\UserEntity.cs" />
     <Compile Include="SerializeUtility.cs" />
     <Compile Include="UserDataService.cs" />

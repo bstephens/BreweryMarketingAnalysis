@@ -82,5 +82,20 @@ namespace SocialHeatMap.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult SearchData()
+        {
+            SearchModel model = new SearchModel(UserInfo.CurrentUsername);
+            model.Load();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SearchData([Bind(Prefix="")]SearchModel model)
+        {
+            model.Load();
+            return View(model);
+        }
     }
 }
